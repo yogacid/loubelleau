@@ -226,11 +226,23 @@
     .quad-item p { color: var(--muted); font-size: 0.96rem; margin: 0; }
 
     /* ── Personas ── */
-    .personas { margin-top: 8px; }
-    .persona { border-top: 1px solid var(--rule); padding: 40px 0; }
-    .personas .persona:last-child { border-bottom: 1px solid var(--rule); }
-    .persona h3 { margin-bottom: 12px; }
-    .persona p { color: var(--muted); margin: 0; }
+    .personas {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+    }
+    .persona {
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 36px 32px;
+      transition: background 0.3s ease;
+    }
+    .persona:hover { background: rgba(158,144,126,0.06); }
+    .persona h3 { margin-bottom: 12px; transition: color 0.3s; }
+    .persona:hover h3 { color: var(--sand); }
+    .persona p { color: var(--muted); margin: 0; font-size: 0.96rem; }
 
     /* ── Bio photo ── */
     .bio-img {
@@ -276,7 +288,7 @@
     .investment p { color: var(--muted); }
 
     .mentorship { border-top: 1px solid var(--rule); padding-top: 48px; }
-    .mentorship h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 28px; }
+    .mentorship h2, .investment h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 28px; }
     .mentorship p { color: var(--muted); margin-bottom: 20px; }
     .mentorship p:last-child { margin-bottom: 0; }
 
@@ -432,6 +444,7 @@
     .pullquote {
       padding: 72px var(--pad);
       text-align: center;
+      background: #ede8df;
     }
     .pullquote blockquote {
       font-family: 'EB Garamond', serif;
@@ -461,6 +474,7 @@
       .quad { grid-template-columns: 1fr; }
       .tiers { grid-template-columns: 1fr; }
       .tier { border-right: 1px solid var(--rule); }
+      .personas { grid-template-columns: 1fr; }
       .section { padding: 68px 0; }
       #hero { padding-top: 130px; padding-bottom: 80px; }
     }
@@ -480,7 +494,7 @@
 <section id="hero">
   <div class="col">
     <span class="hero-name">Louis Belleau, M.A.</span>
-    <h1>Guidance for spiritual awakenings and what comes after.</h1>
+    <h1>Guidance for spiritual awakenings <em>and what comes after.</em></h1>
     <p class="hero-body">The experiences that reorganize everything — and the long, unglamorous work of living differently because of them. This is companionship for that territory, from someone who has walked it and knows the difference between a map and the actual ground.</p>
     <a href="#work" class="hero-link">Explore the work</a>
   </div>
@@ -554,44 +568,49 @@
     <span class="eyebrow r">Who This Is For</span>
     <h2 class="r">You might recognize <em>yourself</em></h2>
 
-    <p class="r" style="color:var(--muted); margin-bottom: 8px;">You wake up at 3am with a dread that has no object. You've done the therapy, read the books, tried the meditation app — something still hasn't moved. You're suspicious of the wellness industry, bored by conventional spirituality, quietly convinced there's something underneath both. You feel the connection between what's wrong with you and what's wrong with the world, but can't quite name it.</p>
+    <p class="r" style="color:var(--muted); margin-bottom: 8px;">You carry the burden of meaninglessness most days, if not everyday. You've done the therapy, read the books, tried the meditation app — something still hasn't moved. You're suspicious of the wellness industry, bored by conventional spirituality, quietly convinced there's something underneath both. You feel the connection between what's wrong with you and what's wrong with the world, but can't quite name it.</p>
     <p class="r" style="color:var(--muted); margin-bottom: 48px; font-style: italic;">What these people share: sincerity — and a sense, however inchoate, that the difficulty they are in is not merely a problem to be solved, but a passage to be navigated.</p>
 
-    <div class="personas">
+    <div class="personas rs">
 
-      <div class="persona r">
+      <div class="persona">
         <h3>The person in the wake of a spiritual opening</h3>
         <p>Something broke through — in a ceremony, on a retreat, in a meditation, or without any catalyst at all. Your worldview has been reorganized at a level that most people around you can't reach. You are managing the gap between what you now know and the life you're still living. You need someone who understands this territory and can help you find your footing within it, not someone who will pathologize it or spiritually inflate it.</p>
       </div>
 
-      <div class="persona r">
+      <div class="persona">
         <h3>The person navigating a dark night of the soul</h3>
         <p>What mystics across traditions have called the dark night is a genuine territory: the collapse of the structures that once organized meaning, identity, and direction. It can follow a peak experience, emerge from loss, or arrive without warning. It is not depression in the clinical sense, though it resembles it. It is an initiation — and like all initiations, it requires a guide who has walked through it and returned.</p>
       </div>
 
-      <div class="persona r">
+      <div class="persona">
         <h3>The person working with psychedelic experience</h3>
-        <p>You have had a powerful experience — or you are preparing for one — and you want support that meets it with genuine understanding. Integration here is not about making the experience fit your existing life. It is about allowing the experience to reorganize your relationship with your body, your community, and the living world — the full relational field the experience opened you toward.</p>
+        <p>You have had a powerful experience — or a frightening one — and you want support that meets it with genuine understanding. This includes experiences that destabilized rather than opened, that haven't resolved, or that left something difficult in their wake. Integration here is not about making the experience fit your existing life. It is about allowing it to reorganize your relationship with your body, your community, and the living world — the full relational field it pointed toward.</p>
       </div>
 
-      <div class="persona r">
+      <div class="persona">
         <h3>The seeker who has lost the thread</h3>
         <p>You have read the books, done the retreats, sustained a practice. Something real happened. But somewhere the thread was lost — the practice became routine, the insight didn't translate, or the path forward is no longer clear. You need someone who can meet you at the level of your actual inquiry and help you find the living edge of it again.</p>
       </div>
 
-      <div class="persona r">
+      <div class="persona">
         <h3>The person burning out or breaking down</h3>
         <p>You have run hard for years — achieving, building, optimizing — and something is giving out. The collapse you are experiencing may be exactly the threshold your life has been moving toward. What looks like breakdown from the outside is often the pressure of a deeper intelligence asserting itself. The question is how to meet it, not how to recover from it as quickly as possible.</p>
       </div>
 
-      <div class="persona r">
+      <div class="persona">
         <h3>Someone living with ADHD, depression, or addiction</h3>
         <p>These are often symptoms of a deeper relational disconnection — from the body, from community, from meaning, from the natural world. You are not broken. You are responding, often intelligently, to conditions that were never designed for a human being. I work with the whole person and the whole context, not the diagnosis.</p>
       </div>
 
-      <div class="persona r">
-        <h3>The person carrying ecological grief</h3>
-        <p>You feel the weight of what is being lost in the living world — not as abstraction, but as something visceral and personal. This grief is legitimate. It may also be one of the more honest responses to the time we are living in. I take it seriously as a form of ecological perception rather than a disorder to manage, and I offer space to metabolize it and find what it asks of you.</p>
+      <div class="persona">
+        <h3>The person carrying ecological grief or collapse anxiety</h3>
+        <p>You feel the weight of what is being lost — in the living world, in institutions, in the future you assumed was coming. This might be grief for ecosystems and species, or a broader dread about civilizational unraveling: whether to make long-term plans, whether the systems organizing daily life will hold. Both are legitimate responses to real conditions. I take them seriously as forms of perception, not pathology, and offer space to metabolize what you're carrying and find what it asks of you.</p>
+      </div>
+
+      <div class="persona">
+        <h3>The person in the midst of a major life transition</h3>
+        <p>Divorce, the death of someone close, a career that collapsed, a move that uprooted everything. These don't just change circumstances — they dissolve the identity that was organized around them. What follows is often disorientation that looks like grief but reaches further: a reorganization of self at a level that ordinary support rarely reaches. This territory deserves more than coping strategies.</p>
       </div>
 
     </div>
@@ -616,19 +635,19 @@
     </div>
 
     <div class="prose r">
-      <p>At thirteen I was put on Ritalin. By seventeen I was eating mushrooms in the woods and falling back in love with life for the first time. By eighteen I'd gone too far — chasing visions I had no idea how to integrate, collecting insights like souvenirs from a gift shop I'd broken into. Then the dark night arrived and took everything apart.</p>
+      <p>At ten, I was put on a daily dose of Ritalin. By fifteen I had lost all trust in adults, thought about suicide daily, and lived on the edge — abusing drugs, living recklessly, looking for an exit. By seventeen I discovered mushrooms and LSD and started falling back in love with life again. By eighteen I'd gone too far — chasing psychedelic visions I had no idea how to integrate, collecting insights like souvenirs from a gift shop I'd broken into.</p>
 
-      <p>What came after — years of silence, Vipassana, a slow and humbling return — eventually became the work I do now. I'm not offering shortcuts. I've been on the other side of what happens when you skip the preparation and skip the integration. I know exactly what it costs. The point of psychedelics, I've come to understand, isn't transcendence. It's return. Changed, humbled, and — if you do the work — genuinely useful to the world around you.</p>
+      <p>Then the dark night arrived and took everything apart.</p>
 
-      <p>I offer not answers, but companionship on the walk back.</p>
+      <p>What came after — years of silent meditation, disciplined yoga, vision quests in the wilderness, breathwork intensives, multi-day fasts, a slow and humbling return — eventually became the work I do now. I'm not offering shortcuts. I've been on the other side of what happens when you skip the preparation and skip the integration. I know what it costs.</p>
 
-      <p><strong>I know this terrain from the inside.</strong> My own path has included genuine mystical openings, the long disorientation that followed them, and what I can only describe as a dark night — a period in which the structures that had organized my sense of self and purpose collapsed, and nothing obviously replaced them. What eventually emerged from that passage was not a recovery to what I had been, but a reorganization around something more real.</p>
+      <p>The point of psychedelics — and of healing in general — isn't transcendence. It's return. Changed, humbled, and genuinely useful to the world around you, if you do the work. I offer not answers, but companionship on the walk back.</p>
 
       <p><strong>Academic depth.</strong> I completed a triple major in Psychology, Philosophy, and Religious Studies at McGill University, followed by an MA in Psychedelics and Consciousness Studies at the University of Ottawa, where I developed the Psygaia framework — a systematic account of psychedelic organisms as mediators within broader ecological and cognitive systems, with direct implications for how integration ought to be understood and practiced. I intend to continue this research at the doctoral level.</p>
 
-      <p><strong>Contemplative training.</strong> My practice includes Zen Buddhist training at Enpuku-ji in Montréal, silent Vipassana retreat practice, Ashtanga yoga as a complete path, and certified instruction in conscious connected breathwork. I teach meditation, yoga, and breathwork in private practice and rehabilitation settings. I have trained in and led ceremonial contexts.</p>
+      <p><strong>Contemplative training.</strong> My practice includes Zen Buddhist training at Enpuku-ji in Montréal, silent Vipassana retreat practice, Ashtanga yoga as a complete path, and certified instruction in yoga and conscious connected breathwork. I teach meditation, yoga, and breathwork in private practice and rehabilitation settings. I have trained in and led ceremonial contexts.</p>
 
-      <p><strong>Institutional independence.</strong> I am the founding researcher and director of <a href="https://psygaia.org" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Psygaia</a>, a nonprofit dedicated to ecological and systems-based approaches to psychedelics. I co-founded <a href="https://wovenretreats.com" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Woven</a>, which offers guided ceremonial journeys and integrative retreats. I operate outside pharmaceutical models, institutional lineages, and wellness industry incentives. I can tell you what I actually see.</p>
+      <p><strong>Institutional independence.</strong> I am the founding researcher and director of <a href="https://psygaia.org" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Psygaia</a>, a nonprofit dedicated to ecological and systems-based approaches to psychedelics. I founded <a href="https://wovenretreats.com" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Woven</a>, which offers guided ceremonial journeys and integrative retreats. I operate outside pharmaceutical models, institutional lineages, and wellness industry incentives. I can tell you what I actually see.</p>
     </div>
   </div>
 </section>
@@ -660,11 +679,17 @@
     </div>
   </div>
 </section>
+<hr class="rule" />
+<div class="pullquote r">
+  <blockquote>Reciprocity is a matter of keeping the gift in motion through self-perpetuating cycles of giving and receiving.</blockquote>
+  <cite>— Robin Kimmerer</cite>
+</div>
+<hr class="rule" />
 <section class="section" id="offering">
   <div class="col">
     <span class="eyebrow r">Working Together</span>
     <h2 class="r">The deepest work happens <em>over time</em></h2>
-    <p class="r" style="color:var(--muted); margin-bottom: 52px;">Integration is not a task that can be completed in a single conversation. It unfolds in the continuity of a relationship — one that develops its own intelligence over months, in which I come to know your history, your patterns, and the particular shape of what you are carrying.</p>
+    <p class="r" style="color:var(--muted); margin-bottom: 52px;">This work is not a task that can be completed in a single conversation. It unfolds in the continuity of a relationship — one that develops its own intelligence over months, in which I come to know your history, your patterns, and the particular shape of what you are carrying.</p>
 
     <div class="tiers rs">
       <div class="tier">
@@ -685,7 +710,7 @@
     </div>
 
     <div class="investment r">
-      <h3>On Contribution</h3>
+      <h2>On contribution</h2>
       <p>This work is offered in the spirit of <em>dāna</em> — generosity according to one's means and the value received. Sessions are typically $80–200, offered on a sliding scale. There is no fixed fee. Before we begin, we speak honestly about what is possible and what is right. I make special accommodations based on genuine resonance and fit. Reach out and we will find what makes sense.</p>
     </div>
 
@@ -693,12 +718,6 @@
       <h2>Group retreats</h2>
       <p>For those drawn to working in community — in nature, with others on a similar arc — I co-founded <a href="https://wovenjourneys.co" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Woven</a>, which offers guided group psychedelic journeys and integrative retreats in the BC backcountry and beyond. These are not luxury wellness retreats. They are held containers for real work, in real nature, with people who are genuinely here for it.</p>
       <p>Woven and 1:1 work with me are complementary — some people begin with a retreat and then continue individually; others work with me first and find their way to the group when it's right. Either path is legitimate. <a href="https://wovenjourneys.co" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Learn more about upcoming retreats at Woven →</a></p>
-    </div>
-      <h2>Another way to work together</h2>
-      <p>Not everyone in this territory needs deep, frequent accompaniment. Some people — particularly those with meaningful self-awareness who have already done significant work — need something different: a trusted outside perspective they can return to periodically.</p>
-      <p>This is a mentorship relationship. We meet once a month. You bring what is most alive: a decision you are sitting with, a pattern that keeps appearing, a direction you are trying to clarify. I offer honest perspective from the outside, and the accumulated context of someone who has known your history over time.</p>
-      <p>It is a lighter touch. Less about going into the interior, more about orientation. Less about the depths of what isn't moving, more about seeing clearly and staying true. The relationship itself becomes a resource — a reliable outside eye from someone who understands your context and can speak freely.</p>
-      <p><strong>The commitment:</strong> three to twelve months, once monthly. We discuss what is right in conversation.</p>
     </div>
   </div>
 </section>
@@ -762,7 +781,7 @@
 <section class="section" id="begin">
   <div class="col">
     <h2 class="r">Follow your <em>intuition</em></h2>
-    <p class="r" style="color:var(--muted); font-size:1.1rem; line-height:1.78; max-width:500px; margin-bottom:48px;">If something in you recognizes what is written here — a sense of being seen in something you have struggled to name, a quiet pull toward the kind of accompaniment you have not yet found — follow it. That recognition is not incidental. It is the beginning of the work. You don't need to have it figured out. You need only sincerity and a willingness to look honestly at what is actually here.</p>
+    <p class="r" style="color:var(--muted); font-size:1.1rem; line-height:1.78; margin-bottom:48px;">If something in you recognizes what is written here — a sense of being seen in something you have struggled to name, a quiet pull toward the kind of accompaniment you have not yet found — follow it. That recognition is not incidental. It is the beginning of the work. You don't need to have it figured out. You need only sincerity and a willingness to look honestly at what is actually here.</p>
     <p class="r" style="font-family:'EB Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--faint); margin-bottom:48px;">We are a way for the cosmos to know itself. — Carl Sagan</p>
     <div class="r">
       <a href="https://cal.com/loubelleau/coaching" class="btn-primary" target="_blank" rel="noopener">Schedule a Discovery Call</a>
