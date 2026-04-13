@@ -185,10 +185,19 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 60%, rgba(42,74,58,0.25) 0%, transparent 70%);
+      background: radial-gradient(ellipse at 50% 65%, rgba(200,160,80,0.09) 0%, transparent 65%);
       pointer-events: none;
+      z-index: 1;
     }
-    #hero .col { max-width: 1060px; position: relative; z-index: 1; }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #hero .col { max-width: 1060px; position: relative; z-index: 2; }
     #hero .hero-body { margin-left: auto; margin-right: auto; }
     .hero-name {
       display: block;
@@ -235,6 +244,15 @@
       animation: fadeUp 0.8s ease 0.74s forwards;
       transition: background 0.25s, color 0.25s, transform 0.25s;
     }
+    .hero-btn::before {
+      content: '';
+      position: absolute;
+      inset: -40px -60px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,252,245,0.09) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .hero-btn { position: relative; }
     .hero-btn:hover { background: #fff; transform: translateY(-2px); }
 
     /* ── Scroll indicator ── */
@@ -297,10 +315,23 @@
       border-right: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
       padding: 36px 32px;
-      transition: background 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.35s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
     }
-    .persona:hover { background: rgba(42,74,58,0.05); }
-    .persona h3 { margin-bottom: 12px; transition: color 0.3s; }
+    .persona::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+    }
+    .persona:hover { background: rgba(42,74,58,0.04); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(28,25,20,0.07); }
+    .persona:hover::before { transform: scaleY(1); }
+    .persona h3 { margin-bottom: 12px; transition: color 0.35s; }
     .persona:hover h3 { color: var(--accent); }
     .persona p { color: var(--muted); margin: 0; font-size: 0.96rem; }
 
@@ -492,6 +523,82 @@
     .footer-links a:hover { color: var(--text); }
     .footer-copy { font-family: 'Inter', sans-serif; font-size: 0.68rem; color: var(--faint); }
 
+    /* ── Accordion ── */
+    .accordion { border-top: 1px solid var(--rule); margin-top: 8px; }
+    .accordion-item { border-bottom: 1px solid var(--rule); }
+    .accordion-header {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 28px 0;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      cursor: none;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .accordion-symbol {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--faint);
+      transition: color 0.4s ease;
+    }
+    .accordion-item.open .accordion-symbol { color: var(--accent); }
+    .accordion-title {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--text);
+      flex: 1;
+      line-height: 1.1;
+      transition: color 0.4s ease;
+    }
+    .accordion-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), color 0.4s ease;
+      color: var(--faint);
+      position: relative;
+    }
+    .accordion-icon::before,
+    .accordion-icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease;
+    }
+    .accordion-icon::before { width: 18px; height: 1px; top: 50%; left: 0; transform: translateY(-50%); }
+    .accordion-icon::after  { width: 1px; height: 18px; left: 50%; top: 0; transform: translateX(-50%); }
+    .accordion-item.open .accordion-icon { color: var(--accent); }
+    .accordion-item.open .accordion-icon::after { transform: translateX(-50%) rotate(90deg); opacity: 0; }
+    .accordion-item.open .accordion-title { color: var(--accent); }
+    .accordion-item.open .accordion-num { color: var(--accent-muted); }
+    .accordion-body {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.55s cubic-bezier(0.22,1,0.36,1);
+    }
+    .accordion-body-inner {
+      padding: 0 0 36px 52px;
+    }
+    .accordion-body-inner p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 580px;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+    }
+    .accordion-item.open .accordion-body-inner p {
+      opacity: 1;
+      transform: none;
+    }
+
     /* ── Scroll reveal ── */
     .r {
       opacity: 0;
@@ -508,6 +615,8 @@
     .rs.on > *:nth-child(2) { transition-delay: 0.08s; }
     .rs.on > *:nth-child(3) { transition-delay: 0.16s; }
     .rs.on > *:nth-child(4) { transition-delay: 0.24s; }
+    .rs.on > *:nth-child(5) { transition-delay: 0.32s; }
+    .rs.on > *:nth-child(6) { transition-delay: 0.40s; }
     .rs.on > * { opacity: 1; transform: none; }
 
     @keyframes fadeUp { to { opacity: 1; transform: none; } }
@@ -596,8 +705,8 @@
 <section id="hero">
   <div class="col">
     <span class="hero-name">Louis Belleau, M.A. — Founding Researcher, <a href="https://psygaia.org" style="color:inherit;border-bottom:1px solid currentColor;text-decoration:none;" target="_blank" rel="noopener">Psygaia</a></span>
-    <h1>Guidance for psychedelic experiences <em>and what comes after.</em></h1>
-    <p class="hero-body">The experiences that reorganize everything — and the long, unglamorous work of living differently because of them. This is companionship for that territory, from someone who has walked it and knows the difference between a map and the actual ground.</p>
+    <h1>For people who are good at life on paper <em>but hollow underneath.</em></h1>
+    <p class="hero-body">You've followed the script — the shiny career, the success milestones, the optimized routine — and arrived somewhere that doesn't feel right. The path through isn't more achievement. It's a different kind of work entirely.</p>
     <a href="https://cal.com/loubelleau/coaching?overlayCalendar=true&month=2026-04" class="hero-btn" target="_blank" rel="noopener">See If We're a Fit</a>
     <a href="#work" class="scroll-indicator">
       <div class="scroll-arrow"></div>
@@ -616,15 +725,14 @@
 <section class="section" id="work">
   <div class="col">
     <span class="eyebrow r">The Work</span>
-    <h2 class="r">The full arc of <em>the journey</em></h2>
+    <h2 class="r">The oldest question, <em>and a path through it</em></h2>
     <div class="prose r">
-      <p><strong>Preparation.</strong> Most psychedelic experiences are shaped before they begin. How you enter — the intention you carry, the fears you haven't examined, the context you've chosen — determines what becomes possible inside. I work with people before they go in: clarifying what they're actually asking for, surfacing what might resist it, and building the inner conditions for genuine opening rather than overwhelming.</p>
-      <p><strong>Navigation.</strong> Being inside a psychedelic experience is a skill — one almost no one is trained for. How to remain oriented when things become difficult. How to stop fighting what's arising. When to lean in and when to hold ground. I teach these capacities before you go in, and can be available during if that's what the situation calls for. The difference between an overwhelming experience and a difficult but integrable one is often technical.</p>
-      <p><strong>Integration.</strong> The experience is an opening. Integration is what you do with the door that's now open — and it asks more of you than the ceremony did. Not analysis of what you saw, but whether your body is different, your relationships are different, whether you're actually living from what the medicine showed you. This is the long, unglamorous, essential work. We use meditation, breathwork, somatic practice, and deliberate engagement with the natural world — not as separate techniques, but as pathways back into the life the experience pointed toward.</p>
-    </div>
-    <div class="crisis-box r">
-      <h3>If things went wrong</h3>
-      <p>Sometimes a psychedelic experience destabilizes rather than opens — material surfaces and doesn't settle, something feels broken open and not yet sealed. This is not failure, and it doesn't mean the work is over. I offer support for people navigating difficulty in the aftermath: carefully, without rushing toward resolution, and without pathologizing what is often the medicine's work finding resistance. If this is where you are, reach out.</p>
+      <p>The sense that something is lacking is not a modern invention, but our modern industrial-growth culture has made it worse. Traditions across time and geography have documented this feature of human experience: the Buddha's diagnosis of <em>dukkha</em>, the pervasive unsatisfactoriness of a life organized around comfort and acquisition; the author of Ecclesiastes, who surveyed a life of achievement, pleasure, and accumulation and called it vanity — a chasing after wind; Aristotle's distinction between hedonic pleasure and <em>eudaimonia</em>, genuine flourishing; the understanding in many indigenous traditions that meaning lives not inside the individual but in relationship — with community, with land, with the living world. What these traditions share is the recognition that the self-contained, achievement and consumption-oriented life was never designed to be enough. The emptiness is, in part, the point — a hungry person is a reliable consumer. Most people sense this. Few know what to do with it.</p>
+      <p>There is no single path through. Depending on where you are, we might work with any of the following — separately or together.</p>
+      <p><strong>Inquiry</strong> is the practice of philosophical contemplation — examining the assumptions, narratives, and beliefs the thinking mind takes for granted. Where the other practices work primarily through the body and direct experience, inquiry meets the intellect on its own ground and invites it to see through itself. For people who live in their heads, this is often the necessary complement to the embodied work.</p>
+      <p><strong>Meditation</strong> builds the foundational capacity to be present with what is actually here — the restlessness, the dissatisfaction, the grasping — long enough to see through it, and understand it. It is the ground from which everything else becomes possible.</p>
+      <p><strong>Breathwork</strong> takes the work into the body. It introduces altered states gently, teaches the nervous system to regulate and stabilize, and returns awareness to the pre-verbal intelligence the body carries.</p>
+      <p><strong>Psychedelics</strong>, when the ground has been prepared, offer a direct encounter with what you have been avoiding — and a genuine reorganization of perspective. Not a shortcut, but an accelerant. The insights they make available are not different in kind from what the other practices point toward. They arrive faster, and with more force. Which is why preparation and integration are not optional.</p>
     </div>
   </div>
 </section>
@@ -641,23 +749,79 @@
   <div class="col">
     <span class="eyebrow r">What Changes</span>
     <h2 class="r">The destination is surprisingly <em>ordinary</em></h2>
-    <p class="r" style="color:var(--muted); margin-bottom: 40px;">People who do this work over the arc of months describe a transformation that often surprises them — not into some elevated spiritual state, but into something much more liveable.</p>
-    <div class="quad rs">
-      <div class="quad-item">
-        <h3>Groundedness</h3>
-        <p>The destabilization of awakening gives way to genuine rootedness. You find that you can hold what you encountered without being consumed by it. The body becomes a home again.</p>
+    <p class="r" style="color:var(--muted); margin-bottom: 40px;">People who do this work describe a transformation that often surprises them — not into some elevated spiritual state, but into something much more liveable.</p>
+    <div class="accordion r">
+      <div class="accordion-item open">
+        <button class="accordion-header">
+          <svg class="accordion-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M2 12 C5 8.5, 8 15.5, 11 12 C14 8.5, 17 15.5, 22 12"/></svg>
+          <span class="accordion-title">Aliveness</span>
+          <span class="accordion-icon"></span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>The flatness lifts. Not euphoria — something quieter and more durable. You find yourself actually engaged with your own life again.</p>
+          </div>
+        </div>
       </div>
-      <div class="quad-item">
-        <h3>Integration</h3>
-        <p>The gap between insight and daily life narrows. What opened in you begins to express itself not as a state to return to, but as an orientation — a way of moving through the world that is quieter and more durable than any peak experience.</p>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <svg class="accordion-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="9,5 19,5 19,15"/></svg>
+          <span class="accordion-title">Direction</span>
+          <span class="accordion-icon"></span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>Not a five-year plan, but a felt sense of what matters and what to move toward. The choices that once felt impossible become clearer.</p>
+          </div>
+        </div>
       </div>
-      <div class="quad-item">
-        <h3>Reconnection</h3>
-        <p>To other people. To the living world. To the dimensions of meaning that the experience pointed toward. The loneliness of navigating this terrain alone, without being understood, begins to lift.</p>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <svg class="accordion-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M12 3 C12 3, 5 11, 5 15.5 a7 7 0 0 0 14 0 C19 11, 12 3, 12 3Z"/></svg>
+          <span class="accordion-title">Embodiment</span>
+          <span class="accordion-icon"></span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>Less in your head. More present in your body, your relationships, your actual life. The distance between you and your own experience begins to close.</p>
+          </div>
+        </div>
       </div>
-      <div class="quad-item">
-        <h3>Clarity</h3>
-        <p>Your life begins to reorganize around what actually matters. Not dramatically, but steadily. The choices that once seemed difficult become more obvious. You know what you're for.</p>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <svg class="accordion-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>
+          <span class="accordion-title">Belonging</span>
+          <span class="accordion-icon"></span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>Less alone in it. Reconnected to the people around you, to the living world, to something larger than your own story.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <svg class="accordion-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 22,12 12,22 2,12"/></svg>
+          <span class="accordion-title">Authenticity</span>
+          <span class="accordion-icon"></span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>The performed version of yourself — the one built for other people's expectations — loosens its grip. What remains is more honest, and more yours.</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <svg class="accordion-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z"/></svg>
+          <span class="accordion-title">Meaning</span>
+          <span class="accordion-icon"></span>
+        </button>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>A felt sense of purpose that doesn't depend on achievement or external validation. A reason to be here that you actually believe.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -676,49 +840,39 @@
     <span class="eyebrow r">Who This Is For</span>
     <h2 class="r">You might recognize <em>yourself</em></h2>
 
-    <p class="r" style="color:var(--muted); margin-bottom: 8px;">You feel things deeply — more than the people around you, often more than you know what to do with. You live more in your head than in your body. You came to psychedelics not for recreation but for something more fundamental: a way through a disconnection you couldn't name but couldn't escape. The medicine found what you were carrying. Now comes the work of living from what it showed you.</p>
+    <p class="r" style="color:var(--muted); margin-bottom: 8px;">You might be a lawyer who hit partner and felt the floor drop out. A founder who built the thing and found the prize underwhelming. A twenty-two year old who looked at the life being handed to them and couldn't make themselves want it. Someone in the middle of everything — the relationship, the career, the routine — quietly wondering if this is it. What these people share isn't a diagnosis. It's a recognition: the life on offer isn't the life they were made for. And a willingness to do something about it.</p>
     <p class="r" style="color:var(--muted); margin-bottom: 48px; font-style: italic;">What these people share: sincerity — and a sense, however inchoate, that the difficulty they are in is not merely a problem to be solved, but a passage to be navigated.</p>
 
     <div class="personas rs">
 
       <div class="persona">
-        <h3>Preparing for an experience</h3>
-        <p>How you enter determines what becomes possible. I work with you before you go in: clarifying what you're actually asking for, surfacing what might resist it, and building the inner conditions for genuine opening rather than overwhelm.</p>
+        <h3>The successful professional who can't explain why they're unhappy</h3>
+        <p>You've built the career, earned the income, hit the milestones. From the outside it looks like success. From the inside there's a flatness you can't quite name.</p>
       </div>
 
       <div class="persona">
-        <h3>Making sense of what happened</h3>
-        <p>The experience is the opening. Integration is what you do with the door that's now open. Not analysis of what you saw — but whether you're actually living from what the medicine showed you. This is the long, essential work.</p>
+        <h3>The young person who never bought the script</h3>
+        <p>You're in your teens or twenties and the life being handed to you already feels hollow. You're not broken. You're paying attention.</p>
       </div>
 
       <div class="persona">
-        <h3>When the experience was difficult or overwhelming</h3>
-        <p>Destabilization instead of opening. Material that surfaced and hasn't settled. A sense that something broke open and hasn't sealed. This is not failure — it is often where the medicine's work is most concentrated. I work carefully with people navigating this.</p>
+        <h3>The person burning out or breaking down</h3>
+        <p>You've run hard for years and something is giving out. What looks like breakdown is often the pressure of a deeper intelligence asserting itself.</p>
       </div>
 
       <div class="persona">
-        <h3>The person in the wake of a spiritual opening</h3>
-        <p>Something broke through — in ceremony, on retreat, in meditation, or without any catalyst at all. You are managing the gap between what you now know and the life you're still living, and you need someone who understands this territory without pathologizing it or inflating it.</p>
+        <h3>The person in the wake of a psychedelic or spiritual experience</h3>
+        <p>Something opened and you're still living in the gap between what you now know and the life you returned to. Integration is the work of closing that distance.</p>
       </div>
 
       <div class="persona">
-        <h3>The person navigating a dark night of the soul</h3>
-        <p>The collapse of the structures that once organized meaning, identity, and direction. It can follow a peak experience, emerge from loss, or arrive without warning. It is not depression in the clinical sense, though it resembles it — and it requires a guide who has walked through it and returned.</p>
+        <h3>The person navigating a dark night</h3>
+        <p>The structures that once organized your sense of meaning and identity have collapsed. It resembles depression but reaches further — and it requires a guide who has walked through it and returned.</p>
       </div>
 
       <div class="persona">
-        <h3>The seeker who has lost the thread</h3>
-        <p>You've read the books, done the retreats, sustained a practice. Something real happened. But the thread was lost — the practice became routine, the insight didn't translate, the path forward is no longer clear. You need someone who can meet you at the level of your actual inquiry.</p>
-      </div>
-
-      <div class="persona">
-        <h3>Someone living with ADHD, depression, or addiction</h3>
-        <p>Often symptoms of a deeper relational disconnection — from the body, from community, from meaning, from the living world. You are not broken. You are responding, often intelligently, to conditions that were never designed for a human being. I work with the whole context, not the diagnosis.</p>
-      </div>
-
-      <div class="persona">
-        <h3>The person in the midst of a major life transition</h3>
-        <p>Divorce, death, a career that collapsed, a move that uprooted everything. These don't just change circumstances — they dissolve the identity organized around them. What follows reaches further than grief, and deserves more than coping strategies.</p>
+        <h3>Someone living with depression, anxiety, or addiction</h3>
+        <p>Often symptoms of a deeper disconnection — from the body, from meaning, from the living world. You are not broken. I work with the whole context, not the diagnosis.</p>
       </div>
 
     </div>
@@ -743,21 +897,29 @@
     </div>
 
     <div class="prose r">
-      <p>At ten, I was put on a daily dose of Ritalin. By fifteen I had lost all trust in adults, thought about suicide daily, and lived on the edge — abusing drugs, living recklessly, looking for an exit. By seventeen I discovered mushrooms and LSD and started falling back in love with life again. By eighteen I'd gone too far — chasing psychedelic visions I had no idea how to integrate, collecting insights like souvenirs from a gift shop I'd broken into.</p>
+      <p>I was ten years old and already medicated with Ritalin for not fitting in. By fifteen I had looked at the life being offered to me — the career, the consumption, the performance — and found it so hollow that I didn't want to live. Not because I was sick, but because I was paying attention. I grew up in the meaning crisis before it became a named phenomenon. Fortunately, at seventeen, I started finding my way back through psychedelics and meditation. But I also nearly destroyed myself chasing mystical psychedelic visions without knowing how to integrate them.</p>
 
       <p>Then the dark night arrived and took everything apart.</p>
 
-      <p>What came after — years of silent meditation, disciplined yoga, vision quests in the wilderness, breathwork intensives, multi-day fasts, a slow and humbling return — eventually became the work I do now. I'm not offering shortcuts. I've been on the other side of what happens when you skip the preparation and skip the integration. I know what it costs.</p>
+      <p>What came after was a long, slow, humbling education in what the experiences were actually asking of me.</p>
 
-      <p>The point of psychedelics — and of healing in general — isn't transcendence. It's return. Changed, humbled, and genuinely useful to the world around you, if you do the work. I offer not answers, but companionship on the walk back.</p>
+      <p>What pulled me through, slowly and imperfectly, was a combination of Buddhist practice, breathwork, and eventually ayahuasca. Buddhism came first, through a book my mother bought me as I was finding my way into psychedelics. Breathwork came later, and became the most direct path through the aftermath. Ayahuasca came when I was ready: as a teacher, not a thrill.</p>
 
-      <p>A word about how I'm wired: I live in my head. Analysis has always been more familiar than feeling, ideas more comfortable than presence. My entire path has been about closing that distance — from the head to the heart, from knowing to being, from insight into embodiment. Psychedelics were central to that journey, not as shortcuts but as teachers. I suspect many of the people who find their way here share this pattern. The medicine tends to go directly for what's most locked away. I know that territory from the inside.</p>
+      <p>The point of this work isn't transcendence or escape. It's return. Back to your body, your relationships, your life — but changed. Humbled. More alive to what actually matters. I offer not answers, but companionship on the walk back.</p>
+
+      <p>We are a civilization stuck in our heads — overanalyzing, overthinking, optimizing — and cut off from the intelligence of the body and the heart. I know this from the inside. Analysis has always been more familiar to me than feeling, ideas more comfortable than presence. My entire path has been about closing that distance: from the head to the heart, from knowing to being, from insight into embodiment. Psychedelics accelerated that journey. So did meditation, breathwork, participating in and facilitating ceremony.</p>
+    </div>
+
+    <div class="crisis-box r">
+      <p>A note for those here specifically for psychedelic work: I have been working with these medicines for just over a decade — as a participant, a student, and a guide. I know the difference between a good set and setting and a great one. I know what happens when preparation is skipped. I know the particular loneliness of a difficult experience that no one around you can hold. And I know what genuine integration looks like, as opposed to the story we tell ourselves about it.</p>
+    </div>
+
+    <div class="prose r" style="margin-top: 48px;">
+      <p><strong>Contemplative training.</strong> Zen practice at Enpuku-ji in Montréal, silent Vipassana retreats, Vajrayana training, Ashtanga yoga, certified instruction in yoga and conscious connected breathwork. I teach in private practice and have worked in residential treatment settings with people navigating addiction, depression, and anxiety. I have trained in and led ceremonial contexts.</p>
 
       <p><strong>Academic depth.</strong> Triple major in Psychology, Philosophy, and Religious Studies at McGill; MA in Psychedelics and Consciousness Studies at the University of Ottawa, where I developed the Psygaia framework. Doctoral research is the next step.</p>
 
-      <p><strong>Contemplative training.</strong> Zen practice at Enpuku-ji in Montréal, silent Vipassana retreats, Ashtanga yoga, certified instruction in yoga and conscious connected breathwork. I teach in private practice and rehabilitation settings, and have trained in and led ceremonial contexts.</p>
-
-      <p><strong>Institutional independence.</strong> Founding researcher and director of <a href="https://psygaia.org" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Psygaia</a>; founder of <a href="https://wovenretreats.com" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Woven</a>. I operate outside pharmaceutical models, institutional lineages, and wellness industry incentives. I can tell you what I actually see.</p>
+      <p><strong>Beyond 1:1 work.</strong> I am the founding researcher and director of <a href="https://psygaia.org" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Psygaia</a>, a nonprofit dedicated to psychedelics and ecological systems, and co-founder of <a href="https://wovenretreats.com" style="color:var(--text);border-bottom:1px solid var(--rule);text-decoration:none;" target="_blank" rel="noopener">Woven</a>, which offers group ceremonial journeys and integrative retreats in the BC backcountry.</p>
     </div>
   </div>
 </section>
@@ -891,10 +1053,10 @@
 <section class="section" id="begin">
   <div class="col">
     <h2 class="r">Follow your <em>intuition</em></h2>
-    <p class="r" style="color:var(--muted); font-size:1.1rem; line-height:1.78; margin-bottom:48px;">If something in you recognizes what is written here — a sense of being seen in something you have struggled to name, a quiet pull toward the kind of accompaniment you have not yet found — follow it. That recognition is not incidental. It is the beginning of the work. You don't need to have it figured out. You need only sincerity and a willingness to look honestly at what is actually here.</p>
-    <p class="r" style="font-family:'EB Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--faint); margin-bottom:48px;">We are a way for the cosmos to know itself. — Carl Sagan</p>
+    <p class="r" style="color:var(--muted); font-size:1.1rem; line-height:1.78; margin-bottom:48px;">If something in what you've read here has landed, like a recognition, a sense that the disconnection, emptiness, or anguish you've been managing might actually be pointing somewhere. That is enough. The first conversation costs nothing and commits you to nothing. It is simply a chance to speak honestly about where you are.</p>
+    <p class="r" style="font-family:'EB Garamond',serif; font-style:italic; font-size:1.1rem; color:var(--faint); margin-bottom:48px;">Tell me, what is it you plan to do with your one wild and precious life? — Mary Oliver</p>
     <div class="r">
-      <a href="https://cal.com/loubelleau/coaching" class="btn-primary" target="_blank" rel="noopener">Schedule a Discovery Call</a>
+      <a href="https://cal.com/loubelleau/coaching?overlayCalendar=true&month=2026-04" class="btn-primary" target="_blank" rel="noopener">See If We're a Fit</a>
     </div>
   </div>
 </section>
@@ -931,6 +1093,28 @@
   }, { threshold: 0.05, rootMargin: '0px 0px -36px 0px' });
 
   document.querySelectorAll('.r, .rs').forEach(el => io.observe(el));
+
+  // Accordion
+  const accItems = document.querySelectorAll('.accordion-item');
+  accItems.forEach(item => {
+    const header = item.querySelector('.accordion-header');
+    const body = item.querySelector('.accordion-body');
+    const inner = item.querySelector('.accordion-body-inner');
+    if (item.classList.contains('open')) {
+      body.style.height = inner.scrollHeight + 'px';
+    }
+    header.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      accItems.forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.accordion-body').style.height = '0';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.style.height = inner.scrollHeight + 'px';
+      }
+    });
+  });
 
   // Custom cursor
   const dot = document.getElementById('cursor-dot');
