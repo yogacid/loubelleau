@@ -649,6 +649,97 @@
     body:has(#hero:hover) #cursor-ring { border-color: rgba(240,235,226,0.3); }
     a:hover ~ #cursor-dot, button:hover ~ #cursor-dot { transform: translate(-50%,-50%) scale(2.5); }
 
+    /* ── Work opening questions ── */
+    .work-questions {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 760px;
+      margin-bottom: 48px;
+      text-wrap: pretty;
+    }
+
+    /* ── Practice tabs ── */
+    .practices { margin-top: 52px; }
+    .practice-nav {
+      display: flex;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+    .practice-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 20px 12px 18px;
+      cursor: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 11px;
+      color: var(--faint);
+      transition: color 0.3s ease;
+    }
+    .practice-tab svg {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .practice-tab span {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .practice-tab.active { color: var(--accent); }
+    .practice-tab:not(.active):hover { color: var(--text); }
+    .practice-tab.active svg { transform: translateY(-2px); }
+    .practice-indicator {
+      position: absolute;
+      bottom: -1px;
+      height: 2px;
+      background: var(--accent);
+      transition: left 0.45s cubic-bezier(0.22,1,0.36,1), width 0.45s cubic-bezier(0.22,1,0.36,1);
+      border-radius: 2px;
+    }
+    .practice-panels {
+      padding-top: 40px;
+      position: relative;
+      min-height: 100px;
+    }
+    .practice-panel {
+      position: absolute;
+      inset: 40px 0 0;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+    }
+    .practice-panel.active {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      position: relative;
+      inset: auto;
+    }
+    .practice-panel p {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+      line-height: 1.8;
+      color: var(--text);
+      max-width: 760px;
+      margin: 0;
+      text-wrap: pretty;
+    }
+    @media (max-width: 560px) {
+      .practice-tab { padding: 16px 6px 14px; gap: 8px; }
+      .practice-tab svg { width: 22px; height: 22px; }
+      .practice-tab span { font-size: 0.55rem; }
+    }
+
     /* ── Pull quotes ── */
     .pullquote {
       padding: 72px var(--pad);
@@ -696,7 +787,7 @@
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
 <nav id="nav">
-  <a href="#" class="nav-name">Louis Belleau</a>
+  <a href="#" class="nav-name">Louis Belleau, M.A.</a>
   <ul class="nav-links" style="display:none"></ul>
   <a href="https://cal.com/loubelleau/coaching" class="nav-cta" target="_blank" rel="noopener">Get in Touch</a>
 </nav>
@@ -726,13 +817,68 @@
   <div class="col">
     <span class="eyebrow r">The Work</span>
     <h2 class="r">The oldest question, <em>and a path through it</em></h2>
+    <p class="work-questions r">Why does enough never feel like enough? What does it actually mean to live well? Why does the well-lived life, across every tradition, look so different from the one being sold to us?</p>
+
     <div class="prose r">
-      <p>The sense that something is lacking is not a modern invention, but our modern industrial-growth culture has made it worse. Traditions across time and geography have documented this feature of human experience: the Buddha's diagnosis of <em>dukkha</em>, the pervasive unsatisfactoriness of a life organized around comfort and acquisition; the author of Ecclesiastes, who surveyed a life of achievement, pleasure, and accumulation and called it vanity — a chasing after wind; Aristotle's distinction between hedonic pleasure and <em>eudaimonia</em>, genuine flourishing; the understanding in many indigenous traditions that meaning lives not inside the individual but in relationship — with community, with land, with the living world. What these traditions share is the recognition that the self-contained, achievement and consumption-oriented life was never designed to be enough. The emptiness is, in part, the point — a hungry person is a reliable consumer. Most people sense this. Few know what to do with it.</p>
+      <p>The sense that something is lacking is not a modern invention, but our modern industrial-growth culture has made it worse. Traditions across time and geography have documented this feature of human experience: the Buddha's diagnosis of <em>dukkha</em>, the pervasive unsatisfactoriness of a life organized around comfort and acquisition; Qohelet — the philosopher behind the biblical book of Ecclesiastes — who surveyed a life of achievement, pleasure, and accumulation and called it vanity, a chasing after wind; Aristotle's distinction between hedonic pleasure and <em>eudaimonia</em>, genuine flourishing; the understanding in many indigenous traditions that meaning lives not inside the individual but in relationship — with community, with land, with the living world. What these traditions share is the recognition that the self-contained, achievement and consumption-oriented life was never designed to be enough. The emptiness is, in part, the point — a hungry person is a reliable consumer. Most people sense this. Few know what to do with it.</p>
       <p>There is no single path through. Depending on where you are, we might work with any of the following — separately or together.</p>
-      <p><strong>Inquiry</strong> is the practice of philosophical contemplation — examining the assumptions, narratives, and beliefs the thinking mind takes for granted. Where the other practices work primarily through the body and direct experience, inquiry meets the intellect on its own ground and invites it to see through itself. For people who live in their heads, this is often the necessary complement to the embodied work.</p>
-      <p><strong>Meditation</strong> builds the foundational capacity to be present with what is actually here — the restlessness, the dissatisfaction, the grasping — long enough to see through it, and understand it. It is the ground from which everything else becomes possible.</p>
-      <p><strong>Breathwork</strong> takes the work into the body. It introduces altered states gently, teaches the nervous system to regulate and stabilize, and returns awareness to the pre-verbal intelligence the body carries.</p>
-      <p><strong>Psychedelics</strong>, when the ground has been prepared, offer a direct encounter with what you have been avoiding — and a genuine reorganization of perspective. Not a shortcut, but an accelerant. The insights they make available are not different in kind from what the other practices point toward. They arrive faster, and with more force. Which is why preparation and integration are not optional.</p>
+    </div>
+
+    <div class="practices r">
+      <div class="practice-nav">
+
+        <button class="practice-tab active" data-practice="inquiry">
+          <!-- Eye — looking inward -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span>Inquiry</span>
+        </button>
+
+        <button class="practice-tab" data-practice="meditation">
+          <!-- Concentric stillness -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="2"/>
+            <circle cx="12" cy="12" r="6"/>
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+          <span>Meditation</span>
+        </button>
+
+        <button class="practice-tab" data-practice="breathwork">
+          <!-- Breath wave -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M2 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0"/>
+          </svg>
+          <span>Breathwork</span>
+        </button>
+
+        <button class="practice-tab" data-practice="psychedelics">
+          <!-- Expanding spiral -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 12c0-1.1.9-2 2-2a4 4 0 0 1 0 8 7 7 0 0 1 0-14 9.5 9.5 0 0 1 0 19"/>
+          </svg>
+          <span>Psychedelics</span>
+        </button>
+
+        <div class="practice-indicator"></div>
+      </div>
+
+      <div class="practice-panels">
+        <div class="practice-panel active" id="practice-inquiry">
+          <p>Inquiry is the practice of philosophical contemplation — examining the assumptions, narratives, and beliefs the thinking mind takes for granted. Where the other practices work primarily through the body and direct experience, inquiry meets the intellect on its own ground and invites it to see through itself. For people who live in their heads, this is often the necessary complement to the embodied work.</p>
+        </div>
+        <div class="practice-panel" id="practice-meditation">
+          <p>Meditation builds the foundational capacity to be present with what is actually here — the restlessness, the dissatisfaction, the grasping — long enough to see through it, and understand it. It is the ground from which everything else becomes possible.</p>
+        </div>
+        <div class="practice-panel" id="practice-breathwork">
+          <p>Breathwork takes the work into the body. It introduces altered states gently, teaches the nervous system to regulate and stabilize, and returns awareness to the pre-verbal intelligence the body carries.</p>
+        </div>
+        <div class="practice-panel" id="practice-psychedelics">
+          <p>Psychedelics, when the ground has been prepared, offer a direct encounter with what you have been avoiding — and a genuine reorganization of perspective. Not a shortcut, but an accelerant. The insights they make available are not different in kind from what the other practices point toward. They arrive faster, and with more force. Which is why preparation and integration are not optional.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -759,7 +905,7 @@
         </button>
         <div class="accordion-body">
           <div class="accordion-body-inner">
-            <p>The flatness lifts. Not euphoria — something quieter and more durable. You find yourself actually engaged with your own life again.</p>
+            <p>The flatness lifts. Not euphoria, but something gentler and more sustainable. You find yourself actually engaged with your own life again.</p>
           </div>
         </div>
       </div>
@@ -771,7 +917,7 @@
         </button>
         <div class="accordion-body">
           <div class="accordion-body-inner">
-            <p>Not a five-year plan, but a felt sense of what matters and what to move toward. The choices that once felt impossible become clearer.</p>
+            <p>Clarity emerges. Not a five-year plan, but a felt sense of what matters and what to move toward.</p>
           </div>
         </div>
       </div>
@@ -783,7 +929,7 @@
         </button>
         <div class="accordion-body">
           <div class="accordion-body-inner">
-            <p>Less in your head. More present in your body, your relationships, your actual life. The distance between you and your own experience begins to close.</p>
+            <p>Less in your head. More present in your body, your relationships, your actual life. The distance between your head and your heart begins to close.</p>
           </div>
         </div>
       </div>
@@ -795,7 +941,7 @@
         </button>
         <div class="accordion-body">
           <div class="accordion-body-inner">
-            <p>Less alone in it. Reconnected to the people around you, to the living world, to something larger than your own story.</p>
+            <p>Less alone in it. Feeling more connected to the people around you, to the living world, and to something infinitely larger than yourself.</p>
           </div>
         </div>
       </div>
@@ -807,7 +953,7 @@
         </button>
         <div class="accordion-body">
           <div class="accordion-body-inner">
-            <p>The performed version of yourself — the one built for other people's expectations — loosens its grip. What remains is more honest, and more yours.</p>
+            <p>The performed version of yourself — the one built for other people's expectations — loosens its grip. What remains is more honest, and more true to you.</p>
           </div>
         </div>
       </div>
@@ -819,7 +965,7 @@
         </button>
         <div class="accordion-body">
           <div class="accordion-body-inner">
-            <p>A felt sense of purpose that doesn't depend on achievement or external validation. A reason to be here that you actually believe.</p>
+            <p>A felt sense of purpose that doesn't depend on achievement or external validation. A reason to be here that you actually believe in and act on.</p>
           </div>
         </div>
       </div>
@@ -1093,6 +1239,39 @@
   }, { threshold: 0.05, rootMargin: '0px 0px -36px 0px' });
 
   document.querySelectorAll('.r, .rs').forEach(el => io.observe(el));
+
+  // Practice tabs
+  const practiceTabs = document.querySelectorAll('.practice-tab');
+  const practicePanels = document.querySelectorAll('.practice-panel');
+  const practiceIndicator = document.querySelector('.practice-indicator');
+
+  function movePracticeIndicator(tab) {
+    const nav = tab.closest('.practice-nav');
+    const navRect = nav.getBoundingClientRect();
+    const tabRect = tab.getBoundingClientRect();
+    practiceIndicator.style.left = (tabRect.left - navRect.left) + 'px';
+    practiceIndicator.style.width = tabRect.width + 'px';
+  }
+
+  practiceTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      practiceTabs.forEach(t => t.classList.remove('active'));
+      practicePanels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('practice-' + tab.dataset.practice).classList.add('active');
+      movePracticeIndicator(tab);
+    });
+  });
+
+  // Init indicator position
+  requestAnimationFrame(() => {
+    const activeTab = document.querySelector('.practice-tab.active');
+    if (activeTab) movePracticeIndicator(activeTab);
+  });
+  window.addEventListener('resize', () => {
+    const activeTab = document.querySelector('.practice-tab.active');
+    if (activeTab) movePracticeIndicator(activeTab);
+  });
 
   // Accordion
   const accItems = document.querySelectorAll('.accordion-item');
