@@ -661,83 +661,63 @@
       text-wrap: pretty;
     }
 
-    /* ── Practice tabs ── */
-    .practices { margin-top: 52px; }
-    .practice-nav {
-      display: flex;
+    /* ── Practice grid ── */
+    .practice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 52px;
+      border-top: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+    }
+    .practice-cell {
+      padding: 40px 40px 36px;
+      border-right: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
       position: relative;
+      overflow: hidden;
+      transition: background 0.35s ease;
     }
-    .practice-tab {
-      flex: 1;
-      background: none;
-      border: none;
-      padding: 20px 12px 18px;
-      cursor: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 11px;
+    .practice-cell::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+    }
+    .practice-cell:hover { background: rgba(42,74,58,0.03); }
+    .practice-cell:hover::before { transform: scaleY(1); }
+    .practice-cell:hover svg { color: var(--accent); }
+    .practice-cell svg {
+      width: 22px;
+      height: 22px;
       color: var(--faint);
-      transition: color 0.3s ease;
+      display: block;
+      margin-bottom: 20px;
+      transition: color 0.35s ease;
     }
-    .practice-tab svg {
-      width: 28px;
-      height: 28px;
-      flex-shrink: 0;
-      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
-    }
-    .practice-tab span {
+    .practice-cell h4 {
       font-family: 'Inter', sans-serif;
       font-size: 0.62rem;
+      font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 14px;
     }
-    .practice-tab.active { color: var(--accent); }
-    .practice-tab:not(.active):hover { color: var(--text); }
-    .practice-tab.active svg { transform: translateY(-2px); }
-    .practice-indicator {
-      position: absolute;
-      bottom: -1px;
-      height: 2px;
-      background: var(--accent);
-      transition: left 0.45s cubic-bezier(0.22,1,0.36,1), width 0.45s cubic-bezier(0.22,1,0.36,1);
-      border-radius: 2px;
-    }
-    .practice-panels {
-      padding-top: 40px;
-      position: relative;
-      min-height: 100px;
-    }
-    .practice-panel {
-      position: absolute;
-      inset: 40px 0 0;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: none;
-    }
-    .practice-panel.active {
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
-      position: relative;
-      inset: auto;
-    }
-    .practice-panel p {
+    .practice-cell p {
       font-family: 'EB Garamond', serif;
-      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
-      line-height: 1.8;
-      color: var(--text);
-      max-width: 760px;
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.75;
+      color: var(--muted);
       margin: 0;
       text-wrap: pretty;
     }
-    @media (max-width: 560px) {
-      .practice-tab { padding: 16px 6px 14px; gap: 8px; }
-      .practice-tab svg { width: 22px; height: 22px; }
-      .practice-tab span { font-size: 0.55rem; }
+    @media (max-width: 600px) {
+      .practice-grid { grid-template-columns: 1fr; }
     }
 
     /* ── Pull quotes ── */
@@ -824,61 +804,43 @@
       <p>There is no single path through. Depending on where you are, we might work with any of the following — separately or together.</p>
     </div>
 
-    <div class="practices r">
-      <div class="practice-nav">
+    <div class="practice-grid r">
 
-        <button class="practice-tab active" data-practice="inquiry">
-          <!-- Eye — looking inward -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-          <span>Inquiry</span>
-        </button>
-
-        <button class="practice-tab" data-practice="meditation">
-          <!-- Concentric stillness -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-            <circle cx="12" cy="12" r="2"/>
-            <circle cx="12" cy="12" r="6"/>
-            <circle cx="12" cy="12" r="10"/>
-          </svg>
-          <span>Meditation</span>
-        </button>
-
-        <button class="practice-tab" data-practice="breathwork">
-          <!-- Breath wave -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-            <path d="M2 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0"/>
-          </svg>
-          <span>Breathwork</span>
-        </button>
-
-        <button class="practice-tab" data-practice="psychedelics">
-          <!-- Expanding spiral -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-            <path d="M12 12c0-1.1.9-2 2-2a4 4 0 0 1 0 8 7 7 0 0 1 0-14 9.5 9.5 0 0 1 0 19"/>
-          </svg>
-          <span>Psychedelics</span>
-        </button>
-
-        <div class="practice-indicator"></div>
+      <div class="practice-cell">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <h4>Inquiry</h4>
+        <p>The practice of philosophical contemplation — examining the assumptions, narratives, and beliefs the thinking mind takes for granted. Where the other practices work through the body, inquiry meets the intellect on its own ground and invites it to see through itself.</p>
       </div>
 
-      <div class="practice-panels">
-        <div class="practice-panel active" id="practice-inquiry">
-          <p>Inquiry is the practice of philosophical contemplation — examining the assumptions, narratives, and beliefs the thinking mind takes for granted. Where the other practices work primarily through the body and direct experience, inquiry meets the intellect on its own ground and invites it to see through itself. For people who live in their heads, this is often the necessary complement to the embodied work.</p>
-        </div>
-        <div class="practice-panel" id="practice-meditation">
-          <p>Meditation builds the foundational capacity to be present with what is actually here — the restlessness, the dissatisfaction, the grasping — long enough to see through it, and understand it. It is the ground from which everything else becomes possible.</p>
-        </div>
-        <div class="practice-panel" id="practice-breathwork">
-          <p>Breathwork takes the work into the body. It introduces altered states gently, teaches the nervous system to regulate and stabilize, and returns awareness to the pre-verbal intelligence the body carries.</p>
-        </div>
-        <div class="practice-panel" id="practice-psychedelics">
-          <p>Psychedelics, when the ground has been prepared, offer a direct encounter with what you have been avoiding — and a genuine reorganization of perspective. Not a shortcut, but an accelerant. The insights they make available are not different in kind from what the other practices point toward. They arrive faster, and with more force. Which is why preparation and integration are not optional.</p>
-        </div>
+      <div class="practice-cell">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+          <line x1="4" y1="8" x2="20" y2="8"/>
+          <line x1="7" y1="13" x2="17" y2="13"/>
+          <line x1="10" y1="18" x2="14" y2="18"/>
+        </svg>
+        <h4>Meditation</h4>
+        <p>Builds the foundational capacity to be present with what is actually here — the restlessness, the dissatisfaction, the grasping — long enough to see through it, and understand it. It is the ground from which everything else becomes possible.</p>
       </div>
+
+      <div class="practice-cell">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+          <path d="M3 18 a9 9 0 0 1 18 0"/>
+        </svg>
+        <h4>Breathwork</h4>
+        <p>Takes the work into the body. It introduces altered states gently, teaches the nervous system to regulate and stabilize, and returns awareness to the pre-verbal intelligence the body carries.</p>
+      </div>
+
+      <div class="practice-cell">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 4 L21 20 H3 Z"/>
+        </svg>
+        <h4>Psychedelics</h4>
+        <p>When the ground has been prepared, offer a direct encounter with what you have been avoiding — and a genuine reorganization of perspective. Not a shortcut, but an accelerant. Which is why preparation and integration are not optional.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1129,7 +1091,7 @@
 
     <div class="investment r">
       <h2>On contribution</h2>
-      <p>This work is offered in the spirit of <em>dāna</em> — generosity according to one's means and the value received. Sessions are typically $80–200, offered on a sliding scale. There is no fixed fee. Before we begin, we speak honestly about what is possible and what is right. I make special accommodations based on genuine resonance and fit. Reach out and we will find what makes sense.</p>
+      <p>Sessions are offered in the spirit of <em>dāna</em> — generosity according to one's means and the value received. The suggested floor is $100 per session. There is no ceiling. Before we begin, we speak honestly about what is possible and what feels right.</p>
     </div>
 
     <div class="mentorship r" style="border-top: 1px solid var(--rule); padding-top: 48px; margin-top: 0;">
@@ -1240,38 +1202,6 @@
 
   document.querySelectorAll('.r, .rs').forEach(el => io.observe(el));
 
-  // Practice tabs
-  const practiceTabs = document.querySelectorAll('.practice-tab');
-  const practicePanels = document.querySelectorAll('.practice-panel');
-  const practiceIndicator = document.querySelector('.practice-indicator');
-
-  function movePracticeIndicator(tab) {
-    const nav = tab.closest('.practice-nav');
-    const navRect = nav.getBoundingClientRect();
-    const tabRect = tab.getBoundingClientRect();
-    practiceIndicator.style.left = (tabRect.left - navRect.left) + 'px';
-    practiceIndicator.style.width = tabRect.width + 'px';
-  }
-
-  practiceTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      practiceTabs.forEach(t => t.classList.remove('active'));
-      practicePanels.forEach(p => p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('practice-' + tab.dataset.practice).classList.add('active');
-      movePracticeIndicator(tab);
-    });
-  });
-
-  // Init indicator position
-  requestAnimationFrame(() => {
-    const activeTab = document.querySelector('.practice-tab.active');
-    if (activeTab) movePracticeIndicator(activeTab);
-  });
-  window.addEventListener('resize', () => {
-    const activeTab = document.querySelector('.practice-tab.active');
-    if (activeTab) movePracticeIndicator(activeTab);
-  });
 
   // Accordion
   const accItems = document.querySelectorAll('.accordion-item');
