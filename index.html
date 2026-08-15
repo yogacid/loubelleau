@@ -25,8 +25,11 @@
       --accent-mid:   #2a4a3a;
       --accent-light: #3d6b54;
       --accent-pale:  #eef3f0;
-      --col:          1080px;
-      --pad:          clamp(20px, 5vw, 80px);
+      --col:          1072px;
+      /* left column: the About photo, and the heading in every other section.
+         Sized so the photo's height matches the About copy beside it. */
+      --figure:       358px;
+      --pad:          clamp(20px, 4vw, 56px);
       --r:            10px;
     }
 
@@ -73,6 +76,20 @@
       max-width: var(--col);
       margin: 0 auto;
       padding: 0 var(--pad);
+    }
+    /* Section heads use the same grid as the About block: a 332px left column
+       (photo there, heading everywhere else) and 604px of copy beside it. So
+       every text block on the page sits at one width, in one position, and the
+       pair always fills the column. Grids below span the full width. */
+    .sec-head {
+      display: grid;
+      grid-template-columns: var(--figure) 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .sec-head h2 { margin-bottom: 0; }
+    @media (max-width: 820px) {
+      .sec-head { grid-template-columns: 1fr; gap: 20px; }
     }
 
     .section     { padding: 96px 0; }
@@ -500,8 +517,8 @@
     /* ── ABOUT ─────────────────────────────── */
     .about-layout {
       display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 72px;
+      grid-template-columns: var(--figure) 1fr;
+      gap: 48px;
       align-items: start;
     }
     .about-photo {
@@ -584,7 +601,7 @@
     }
 
     /* ── OFFER ─────────────────────────────── */
-    .offer-intro { max-width: 640px; margin-bottom: 56px; }
+    .offer-intro { margin-bottom: 56px; }
     .offer-intro h2 { margin-bottom: 18px; }
     .offer-intro p { color: var(--muted); }
 
@@ -673,6 +690,11 @@
       margin-bottom: 14px;
     }
     .dana-box p { font-size: 0.92rem; color: var(--muted); }
+    /* sidebar variant: same component in the narrow left column, so the
+       padding and type step down to keep a usable line length */
+    .dana-box.compact { padding: 26px 28px; }
+    .dana-box.compact h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .dana-box.compact p { font-size: 0.82rem; line-height: 1.72; }
 
     /* ── PROCESS / STEPS ───────────────────── */
     .steps-list { margin-top: 52px; }
@@ -936,6 +958,8 @@
     @media (max-width: 640px) {
       html { font-size: 16px; }
       .nav-links { display: none; }
+      /* uppercase + wide tracking overflows the pill on small screens */
+      .hero-tag { font-size: 0.56rem; letter-spacing: 0.1em; padding: 7px 13px; }
       .section { padding: 68px 0; }
       #hero { padding-top: 108px; padding-bottom: 84px; min-height: auto; }
       #hero h1 { max-width: 100%; }
@@ -962,7 +986,7 @@
 
 <!-- ── NAV ── -->
 <nav>
-  <a href="#" class="nav-logo">Louis Belleau, M.A.</a>
+  <a href="#" class="nav-logo">Louis Belleau</a>
   <ul class="nav-links">
     <li><a href="#work">The Work</a></li>
     <li><a href="#for-whom">Who It's For</a></li>
@@ -976,13 +1000,12 @@
 <section id="hero">
   <div class="col">
     <span class="hero-tag">
-      <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
-      Trusted by 100+ clients
+      MA &middot; Psychedelics &amp; Consciousness Studies
     </span>
     <h1>For people who &ldquo;made&nbsp;it&rdquo; <em>but feel hollow underneath.</em></h1>
     <p class="hero-sub">
       <strong>Out of your head. Into your body. Back to the earth.</strong>
-      You've followed the script and arrived somewhere that doesn't feel right. The path through isn't more achievement — it's a different kind of work entirely.
+      You've followed the script and arrived somewhere that doesn't feel right. The way through isn't more achievement. It's inquiry, meditation, breathwork, and sometimes psychedelics.
     </p>
     <div class="hero-actions">
       <a href="https://cal.com/loubelleau/coaching" class="btn-primary" target="_blank" rel="noopener">See if we're a fit →</a>
@@ -991,18 +1014,13 @@
     <div class="hero-creds">
       <span class="hero-cred">MA, University of Ottawa</span>
       <span class="hero-cred">Certified Breathwork + Meditation + Yoga Instructor</span>
-      <span class="hero-cred">Founder of <a href="https://psygaia.org" target="_blank" rel="noopener">Psygaia</a> + <a href="https://wovenjourneys.co" target="_blank" rel="noopener">Woven Retreats</a></span>
+      <span class="hero-cred">Founder of <a href="https://psygaia.org" target="_blank" rel="noopener">Psygaia</a> &middot; Co-founder of <a href="https://wovenjourneys.co" target="_blank" rel="noopener">Woven</a></span>
     </div>
   </div>
   <a href="#about" class="hero-cue" aria-label="Scroll down">
     <svg width="24" height="14" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l11 11L23 1"/></svg>
   </a>
 </section>
-
-<div class="pullquote r">
-  <blockquote>Deep down, we hunger to meet our soul. All during the course of our lives we struggle to catch up with ourselves. We are so taken up, so busy and distracted, that we cannot dedicate enough time or recognition to the depths within us.</blockquote>
-  <cite>— John O'Donohue</cite>
-</div>
 
 <!-- ── ABOUT ── -->
 <section class="section" id="about">
@@ -1014,7 +1032,11 @@
       <div class="about-body">
         <span class="eyebrow r">About</span>
         <h2 class="r">I'm Louis Belleau.</h2>
-        <p class="r" style="font-size:1.08rem; color:var(--muted); max-width:520px;">I help people who've followed the script and found it hollow find their way back — to their bodies, their relationships, and a life that actually feels like theirs.</p>
+        <div class="r">
+          <p>I help people who've done everything right and still feel like something's missing get out of their heads, back into their bodies, and into contact with the living world.</p>
+          <p>I grew up in Hong Kong and returned to Canada at fifteen. Since then I've worked between traditions: Zen, yoga, sacred Amazonian plant medicine, cognitive science. I don't think any one of them has the whole answer.</p>
+          <p>What I offer isn't answers. It's company on the walk back to wholeness.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1023,38 +1045,47 @@
 <!-- ── STORY ── -->
 <section class="section alt" id="story">
   <div class="col">
-    <div style="max-width:680px;">
-      <span class="eyebrow r">My Story</span>
-      <h2 class="r">The dark night<br><em>that took everything apart</em></h2>
-      <div class="r" style="margin-top:32px;">
-        <p style="color:var(--muted);">I was ten years old and already medicated for not fitting in.</p>
-        <p style="color:var(--muted);">By fifteen, I'd looked at the life being offered to me — the career, the consumption, the performance — and found it so hollow I didn't want to live. Not because I was sick. Because I was paying attention.</p>
-        <p style="color:var(--muted);">At seventeen, I found my way back through psychedelics and meditation. I also nearly destroyed myself chasing mystical visions I didn't know how to integrate.</p>
-        <p style="color:var(--muted);">Then the dark night arrived and took everything apart.</p>
-        <p style="color:var(--muted);">What pulled me through, slowly and imperfectly, was Buddhist practice, breathwork, and eventually ayahuasca — used as a teacher, not a thrill.</p>
+    <div class="sec-head">
+      <div class="r"><span class="eyebrow">My Story</span>
+      <h2>They gave me speed<br><em>to slow me down</em></h2>
+        <div class="dana-box compact" style="margin-top:32px;">
+          <h3>Background</h3>
+          <p>I studied Psychology, Philosophy, and Comparative Religion at McGill, then earned an MA in Psychedelics and Consciousness Studies at the University of Ottawa. I founded <a href="https://psygaia.org" target="_blank" rel="noopener" style="color:var(--accent); border-bottom:1px solid rgba(42,74,58,0.3);">Psygaia</a>, a psychedelic and ecological medicine nonprofit. I've been practicing Zen and Vipassana for over a decade. Dzogchen now.</p>
+          <p style="margin-top:14px; color:var(--text); font-weight:500;">None of this is theoretical. I teach what actually worked.</p>
+        </div>
+      </div>
+      <div class="r">
+        <p style="color:var(--muted);">I was thirteen when the Ritalin started. It lasted five years.</p>
+        <p style="color:var(--muted);">It sharpened my focus and dulled everything else. I stopped eating. I stopped laughing. I finally had decent grades, but nothing else got better.</p>
+        <p style="color:var(--muted);">By fifteen I was daydreaming about stepping in front of buses, or jumping off a building. Not because I was mentally ill. Because I was sensitive, and paying attention to a sick culture.</p>
+        <p style="color:var(--muted);">The life on offer was a 9 to 5, debt, and endless consumerism. It seemed terrible to me. At seventeen I took mushrooms, reconnected to spirit, and wanted to live again.</p>
+        <p style="color:var(--muted);">Then I chased the mystical dragon. Bigger visions, more often. I integrated nothing. The dark night of the soul arrived on a high dose of LSD and took everything apart.</p>
+        <p style="color:var(--muted);">What put me back together wasn't more. It was less. Multiple ten-day silent retreats. A decade of sitting. Breathwork. And later, ayahuasca. As a teacher, not a thrill.</p>
         <p style="color:var(--text); font-weight:500;">The point of this work isn't transcendence. It's return.</p>
-        <p style="color:var(--muted); margin-top:32px; padding-top:32px; border-top:1px solid var(--rule);">I went on to triple-major in Psychology, Philosophy, and Religious Studies at McGill, then earn an MA in Psychedelics and Consciousness Studies at the University of Ottawa, where I developed the Psygaia framework. I'm a certified breathwork facilitator, a long-term Zen and Vipassana practitioner, and the founding researcher of <a href="https://psygaia.org" target="_blank" rel="noopener" style="color:var(--accent-light); border-bottom:1px solid rgba(61,107,84,0.3);">Psygaia</a>, an ecological and psychedelic medicine nonprofit.</p>
-        <p style="color:var(--muted);">This practice is built from what actually worked — not theoretically, but in my own life, and in the people I've worked with since.</p>
       </div>
     </div>
   </div>
 </section>
 
 <div class="pullquote dark r" style="--quote-img:url('quote-bg-practice.jpg')">
-  <blockquote>Your work should never exceed your practice.</blockquote>
-  <cite>— Vedas</cite>
+  <blockquote>Deep down, we hunger to meet our soul. All during the course of our lives we struggle to catch up with ourselves. We are so taken up, so busy and distracted, that we cannot dedicate enough time or recognition to the depths within us.</blockquote>
+  <cite>— John O'Donohue</cite>
 </div>
 
 <!-- ── THE WORK ── -->
 <section class="section" id="work">
   <div class="col">
-    <span class="eyebrow r">The Work</span>
-    <h2 class="r">The oldest question,<br><em>and a path through it</em></h2>
-    <p class="r" style="color:var(--muted); max-width:600px; font-family:'EB Garamond',serif; font-style:italic; font-size:1.2rem; margin-bottom:32px;">Why does enough never feel like enough? Why does the well-lived life look so different from the one being sold to us?</p>
-    <p class="r" style="color:var(--muted); max-width:600px;">This isn't a modern problem — the Buddha called it <em>dukkha</em>, Ecclesiastes called it vanity, Aristotle distinguished it from <em>eudaimonia</em>. Every tradition that's looked closely has found the same thing: the achievement-and-acquisition life was never built to be enough.</p>
-    <p class="r" style="color:var(--text); max-width:600px; font-weight:500;">The emptiness is, in part, the point. A hungry person is a reliable consumer.</p>
-    <p class="r" style="color:var(--muted); max-width:600px;">Most people sense this. Few know what to do with it.</p>
-    <p class="r" style="color:var(--muted); max-width:600px; margin-bottom:0;">There's no single path through. Depending on where you are, we work with some or all of the following.</p>
+    <div class="sec-head">
+      <div class="r"><span class="eyebrow">The Work</span>
+      <h2>The oldest question,<br><em>and a path through it</em></h2></div>
+      <div class="r">
+    <p style="color:var(--muted); font-family:'EB Garamond',serif; font-style:italic; font-size:1.2rem; margin-bottom:32px;">Why does enough never feel like enough? Why does the well-lived life look so different from the one being sold to us?</p>
+    <p style="color:var(--muted);">This isn't a modern problem — the Buddha called it <em>dukkha</em>, Ecclesiastes called it vanity, Aristotle distinguished it from <em>eudaimonia</em>. Every tradition that's looked closely has found the same thing: the achievement-and-acquisition life was never built to be enough.</p>
+    <p style="color:var(--text); font-weight:500;">The emptiness is, in part, the point. A hungry person is a reliable consumer.</p>
+    <p style="color:var(--muted);">Most people sense this. Few know what to do with it.</p>
+    <p style="color:var(--muted); margin-bottom:0;">There's no single path through. Depending on where you are, we work with some or all of the following.</p>
+      </div>
+    </div>
 
     <div class="problem-grid rs" style="margin-top:48px;">
       <div class="problem-item">
@@ -1073,83 +1104,50 @@
   </div>
 </section>
 
-<div class="pullquote dark r" style="--quote-img:url('quote-bg-cave.jpg')">
-  <blockquote>The cave you fear to enter contains the treasure you seek.</blockquote>
-  <cite>— Joseph Campbell</cite>
-</div>
-
 <!-- ── WHAT CHANGES ── -->
 <section id="outcomes" class="section">
   <div class="col">
-    <span class="eyebrow r">What Changes</span>
-    <h2 class="r">The destination is surprisingly <em>ordinary</em></h2>
-    <p class="r" style="color:var(--muted); max-width:520px; margin-bottom:0;">Not some elevated spiritual state. Something far more livable.</p>
+    <div class="sec-head">
+      <div class="r"><span class="eyebrow">What Changes</span>
+      <h2>The destination is surprisingly <em>ordinary</em></h2></div>
+      <div class="r"><p style="color:var(--muted); margin-bottom:0;">Not some elevated spiritual state. Something far more livable. None of it is dramatic, and that's the point. You're not becoming someone else. You're getting back to yourself.</p></div>
+    </div>
 
-    <div class="faq-list r" style="margin-top:48px;">
-      <div class="faq-item">
-        <button class="faq-btn">
-          <span class="faq-q">Aliveness</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-body">
-          <div class="faq-inner">
-            <p>The flatness lifts. Not euphoria — something gentler and more sustainable. You're engaged with your own life again.</p>
-          </div>
+    <div class="outcomes-grid rs">
+      <div class="outcome-item">
+        <div>
+          <span class="outcome-label">Aliveness</span>
+          <p class="outcome-desc">The flatness lifts. Not euphoria, but something gentler and more sustainable. You're engaged with your own life again.</p>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn">
-          <span class="faq-q">Direction</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-body">
-          <div class="faq-inner">
-            <p>Clarity emerges. Not a five-year plan — a felt sense of what matters and what to move toward.</p>
-          </div>
+      <div class="outcome-item">
+        <div>
+          <span class="outcome-label">Direction</span>
+          <p class="outcome-desc">Clarity emerges. Not a five-year plan. A felt sense of what matters and what to move toward.</p>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn">
-          <span class="faq-q">Embodiment</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-body">
-          <div class="faq-inner">
-            <p>Less in your head, more in your body, your relationships, your actual life. The distance between head and heart begins to close.</p>
-          </div>
+      <div class="outcome-item">
+        <div>
+          <span class="outcome-label">Embodiment</span>
+          <p class="outcome-desc">Less in your head, more in your body, your relationships, your actual life. The distance between head and heart begins to close.</p>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn">
-          <span class="faq-q">Belonging</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-body">
-          <div class="faq-inner">
-            <p>Less alone in it. More connected — to people, to the living world, to something larger than yourself.</p>
-          </div>
+      <div class="outcome-item">
+        <div>
+          <span class="outcome-label">Belonging</span>
+          <p class="outcome-desc">Less alone in it. More connected: to people, to the living world, to something larger than yourself.</p>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn">
-          <span class="faq-q">Authenticity</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-body">
-          <div class="faq-inner">
-            <p>The performed version of you, built for other people's expectations, loosens its grip. What remains is more honest.</p>
-          </div>
+      <div class="outcome-item">
+        <div>
+          <span class="outcome-label">Authenticity</span>
+          <p class="outcome-desc">The performed version of you, built for other people's expectations, loosens its grip. What remains is more honest.</p>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-btn">
-          <span class="faq-q">Meaning</span>
-          <span class="faq-icon"></span>
-        </button>
-        <div class="faq-body">
-          <div class="faq-inner">
-            <p>A felt sense of purpose that doesn't depend on achievement. A reason to be here you actually believe in.</p>
-          </div>
+      <div class="outcome-item">
+        <div>
+          <span class="outcome-label">Meaning</span>
+          <p class="outcome-desc">A felt sense of purpose that doesn't depend on achievement. A reason to be here you actually believe in.</p>
         </div>
       </div>
     </div>
@@ -1159,9 +1157,11 @@
 <!-- ── WHO IT'S FOR ── -->
 <section class="section" id="for-whom">
   <div class="col">
-    <span class="eyebrow r">Who This Is For</span>
-    <h2 class="r">You might recognize <em>yourself</em></h2>
-    <p class="r" style="color:var(--muted); max-width:620px; margin-bottom:0;">You might be a lawyer who hit partner and felt the floor drop out. A founder who built the thing and found the prize underwhelming. A twenty-two year old who couldn't make themselves want the life being handed to them. What these people share isn't a diagnosis — it's a recognition that the life on offer isn't the life they were made for, and a willingness to do something about it.</p>
+    <div class="sec-head">
+      <div class="r"><span class="eyebrow">Who This Is For</span>
+      <h2>You might recognize <em>yourself</em></h2></div>
+      <div class="r"><p style="color:var(--muted); margin-bottom:0;">You might be a lawyer who hit partner and felt the floor drop out. A founder who built the thing and found the prize underwhelming. A twenty-two year old who couldn't make themselves want the life being handed to them. What these people share isn't a diagnosis — it's a recognition that the life on offer isn't the life they were made for, and a willingness to do something about it.</p></div>
+    </div>
 
     <div class="problem-grid rs" style="margin-top:48px;">
       <div class="problem-item">
@@ -1235,10 +1235,10 @@
 <!-- ── OFFER ── -->
 <section class="section alt" id="offer">
   <div class="col">
-    <div class="offer-intro r">
-      <span class="eyebrow">Working Together</span>
-      <h2>The deepest work happens <em>over time</em></h2>
-      <p>This isn't a task completed in a single conversation. It unfolds in the continuity of a relationship — one where I come to know your history, your patterns, the particular shape of what you're carrying.</p>
+    <div class="offer-intro sec-head r">
+      <div><span class="eyebrow">Working Together</span>
+      <h2>The deepest work happens <em>over time</em></h2></div>
+      <div><p>This isn't a task completed in a single conversation. It unfolds in the continuity of a relationship — one where I come to know your history, your patterns, the particular shape of what you're carrying.</p></div>
     </div>
 
     <div class="phases r">
@@ -1309,10 +1309,12 @@
 <!-- ── WRITING ── -->
 <section class="section" id="writing">
   <div class="col">
-    <span class="eyebrow r">Writing</span>
-    <h2 class="r">Read <em>my mind</em></h2>
-    <p class="r" style="color:var(--muted); max-width:560px;">Occasional writing on psychedelics, consciousness, and the inner life — for those not yet ready to reach out, or just curious to read further.</p>
-    <div class="substack-wrap r">
+    <div class="sec-head">
+      <div class="r"><span class="eyebrow">Writing</span>
+      <h2>Read <em>my mind</em></h2></div>
+      <div class="r"><p style="color:var(--muted);">Occasional writing on psychedelics, consciousness, and the inner life — for those not yet ready to reach out, or just curious to read further.</p></div>
+    </div>
+    <div class="substack-wrap r" style="margin-top:48px;">
       <iframe src="https://whatswhatwhoswho.substack.com/embed" width="480" height="150" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
     </div>
   </div>
@@ -1395,19 +1397,13 @@
   <div class="col">
     <div class="r" style="text-align:center;">
       <span class="eyebrow">Ready to begin</span>
-      <h2>Follow <em>your intuition.</em></h2>
-      <p class="cta-sub">If something in what you've read has landed — a recognition, a sense that what you've been carrying might be pointing somewhere — that's enough. The first conversation costs nothing and commits you to nothing.</p>
-      <p style="font-family:'EB Garamond',serif; font-style:italic; font-size:1rem; color:rgba(240,235,226,0.4); max-width:480px; margin:0 auto 36px;">Tell me, what is it you plan to do with your one wild and precious life? — Mary Oliver</p>
+      <h2>Not more. <em>Less.</em></h2>
+      <p class="cta-sub">You've spent a long time adding things. If something here landed, that's enough to begin. The first conversation costs nothing and commits you to nothing.</p>
       <a href="https://cal.com/loubelleau/coaching" class="btn-cta" target="_blank" rel="noopener">See if we're a fit →</a>
       <p class="cta-note">30 minutes · Free · No obligation</p>
     </div>
   </div>
 </section>
-
-<div class="pullquote r">
-  <blockquote>You are not a separate being. You belong to the living body of Earth. You are the Earth, looking up at the stars. You are the Earth, becoming conscious of itself.</blockquote>
-  <cite>— Joanna Macy</cite>
-</div>
 
 <!-- ── FOOTER ── -->
 <footer>
