@@ -896,34 +896,6 @@
 
     @keyframes fadeUp { to { opacity: 1; transform: none; } }
 
-    /* ── Custom cursor ──────────────────────── */
-    * { cursor: none !important; }
-    #cursor-dot {
-      position: fixed;
-      top: 0; left: 0;
-      width: 6px; height: 6px;
-      background: var(--text);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.08s ease, background 0.3s ease;
-    }
-    #cursor-ring {
-      position: fixed;
-      top: 0; left: 0;
-      width: 30px; height: 30px;
-      border: 1px solid rgba(28,25,20,0.18);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
-    }
-    body:has(#hero:hover) #cursor-dot,
-    body:has(#cta:hover) #cursor-dot { background: #f0ebe2; }
-    body:has(#hero:hover) #cursor-ring,
-    body:has(#cta:hover) #cursor-ring { border-color: rgba(240,235,226,0.25); }
 
     /* ── Responsive ─────────────────────────── */
     /* below this the three credentials can't share a line — stack them cleanly
@@ -971,9 +943,6 @@
   </style>
 </head>
 <body>
-
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
 
 <!-- ── NAV ── -->
 <nav>
@@ -1089,7 +1058,7 @@
         <p><strong>Breathwork.</strong> Taking the work into the body. It regulates the nervous system and returns awareness to the intelligence the body already carries.</p>
       </div>
       <div class="problem-item">
-        <p><strong>Psychedelics.</strong> A direct encounter with what you've been avoiding, and a chance to see the world as a blank slate again. An accelerant, not a shortcut.</p>
+        <p><strong>Psychedelics.</strong> A direct encounter with what you've been avoiding. I prepare you, sit with you in person, and integrate afterwards. Or I train you to work on your own. An accelerant, not a shortcut.</p>
       </div>
     </div>
   </div>
@@ -1301,10 +1270,13 @@
 <!-- ── FAQ ── -->
 <section class="section alt" id="faq">
   <div class="col">
-    <span class="eyebrow r">FAQ</span>
-    <h2 class="r">Common questions</h2>
+    <div class="sec-head">
+      <div class="r"><span class="eyebrow">FAQ</span>
+      <h2>Common questions</h2></div>
+      <div class="r"><p style="color:var(--muted);">If something here isn't answered, ask on the call. There are no questions I would rather you didn't ask.</p></div>
+    </div>
 
-    <div class="faq-list r">
+    <div class="faq-list r" style="margin-top:48px;">
 
       <div class="faq-item">
         <button class="faq-btn">
@@ -1314,6 +1286,18 @@
         <div class="faq-body">
           <div class="faq-inner">
             <p>No. This is coaching and guidance work — focused on integration and forward movement, not clinical diagnosis or treatment. If you're in acute mental health crisis, please seek clinical care first. Many clients work with both a therapist and me simultaneously.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">How do sessions actually work?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-inner">
+            <p>By video, wherever you are in the world. I'm based in Vancouver, so if you're local we can meet in person instead. Most people meet twice a month.</p>
           </div>
         </div>
       </div>
@@ -1337,7 +1321,19 @@
         </button>
         <div class="faq-body">
           <div class="faq-inner">
-            <p>No. That layer is available for those for whom it's relevant — never a requirement, never introduced unless you bring it. The core work stands entirely on its own.</p>
+            <p>No. It is never a requirement, and I will not raise it unless you do. The core work is inquiry, meditation and breathwork, and it stands entirely on its own. Most of what changes for people changes there.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn">
+          <span class="faq-q">What does the psychedelic work involve?</span>
+          <span class="faq-icon"></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-inner">
+            <p>Three things. Preparation, which is most of it. Sitting with you through the experience, always in person and only in Canada. And integration afterwards, which is where the change consolidates or doesn't. I also train people to work with these medicines on their own, therapeutically, which for a lot of people is the more useful skill. What I don't do is supply, source, or administer anything. That part is never mine.</p>
           </div>
         </div>
       </div>
@@ -1434,32 +1430,6 @@
   }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.r, .rs').forEach(el => io.observe(el));
 
-  // Custom cursor
-  const dot  = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  (function animateCursor() {
-    dot.style.left  = mx + 'px';
-    dot.style.top   = my + 'px';
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(animateCursor);
-  })();
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      dot.style.transform  = 'translate(-50%,-50%) scale(2.5)';
-      ring.style.width     = '46px';
-      ring.style.height    = '46px';
-    });
-    el.addEventListener('mouseleave', () => {
-      dot.style.transform  = 'translate(-50%,-50%) scale(1)';
-      ring.style.width     = '30px';
-      ring.style.height    = '30px';
-    });
-  });
 </script>
 </body>
 </html>
