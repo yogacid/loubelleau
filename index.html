@@ -763,7 +763,14 @@
 
     /* ── CLOSING CTA ───────────────────────── */
     #cta {
-      background: var(--bg-dark);
+      /* same treatment as the pullquote bands: image under a heavy gradient,
+         darker here because the CTA carries a button and small print */
+      background-image:
+        linear-gradient(180deg, rgba(12,20,16,0.93) 0%, rgba(14,23,19,0.89) 50%, rgba(12,20,16,0.95) 100%),
+        url('quote-bg-cave.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       padding: 112px 0;
       text-align: center;
     }
@@ -797,7 +804,7 @@
     .cta-note {
       margin-top: 18px;
       font-size: 0.7rem;
-      color: rgba(240,235,226,0.3);
+      color: rgba(240,235,226,0.45);
       letter-spacing: 0.04em;
     }
 
@@ -812,6 +819,12 @@
        sections — a cream band would blend into its neighbours there. */
     .pullquote.dark {
       padding: 104px var(--pad);
+      /* fixed band height so the three quotes read as one repeated element
+         regardless of how many lines each one runs to */
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       background-image:
         linear-gradient(180deg, rgba(12,20,16,0.90) 0%, rgba(14,23,19,0.84) 50%, rgba(12,20,16,0.90) 100%),
         var(--quote-img);
@@ -839,6 +852,59 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--faint);
+    }
+
+    /* ── WRITING / POST LIST ────────────────── */
+    .post-list { border-top: 1px solid var(--rule); }
+    .post {
+      display: block;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none;
+      transition: background 0.25s ease, padding-left 0.25s ease;
+    }
+    .post:hover { background: rgba(42,74,58,0.035); padding-left: 10px; }
+    .post-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      color: var(--text);
+      display: block;
+      transition: color 0.2s ease;
+    }
+    .post:hover .post-title { color: var(--accent-light); }
+    .post-sub {
+      font-size: 0.86rem;
+      color: var(--muted);
+      display: block;
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+    .post-all {
+      display: inline-block;
+      margin-top: 22px;
+      font-size: 0.8rem;
+      color: var(--accent-light);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(61,107,84,0.3);
+      padding-bottom: 2px;
+    }
+    .post-all:hover { border-color: var(--accent-light); }
+
+    /* signup: copy left, embed right, so the box fills its width */
+    .signup-grid {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 40px;
+      align-items: center;
+    }
+    .signup-grid h3 { margin-bottom: 8px; }
+    .signup-grid p { font-size: 0.88rem; color: var(--muted); margin: 0; }
+    .signup-form iframe { border-radius: 8px; display: block; }
+    /* the embed is a fixed 480px, so stack well before the copy gets squeezed */
+    @media (max-width: 1024px) {
+      .signup-grid { grid-template-columns: 1fr; gap: 22px; text-align: center; }
+      .signup-grid .signup-form { display: flex; justify-content: center; }
     }
 
     /* ── SUBSTACK ───────────────────────────── */
@@ -1258,8 +1324,32 @@
     <div class="sec-head">
       <div class="r"><span class="eyebrow">Writing</span>
       <h2>What I'm still <em>working out</em></h2></div>
-      <div class="r"><p style="color:var(--muted);">Essays on psychedelics, consciousness, and the inner life. Infrequent, long, and often unresolved. It's where I think out loud before I know what I think.</p>
-        <div class="substack-wrap" style="margin-top:28px;">
+      <div class="r"><p style="color:var(--muted);">Essays on psychedelics, consciousness, and the inner life. Infrequent, long, and often unresolved. It's where I think out loud before I know what I think.</p></div>
+    </div>
+
+    <div class="post-list rs" style="margin-top:44px;">
+      <a class="post" href="https://whatswhatwhoswho.substack.com/p/mcawakening" target="_blank" rel="noopener">
+        <span class="post-title">McAwakening</span>
+        <span class="post-sub">My Journey of Chemical Enlightenment</span>
+      </a>
+      <a class="post" href="https://whatswhatwhoswho.substack.com/p/the-best-bad-trip-ever" target="_blank" rel="noopener">
+        <span class="post-title">The Dark Night of the Soul</span>
+        <span class="post-sub">LSD, divinity and the abyss of infinite despair</span>
+      </a>
+      <a class="post" href="https://whatswhatwhoswho.substack.com/p/the-colonization-of-the-mind" target="_blank" rel="noopener">
+        <span class="post-title">The Colonization of the Mind</span>
+        <span class="post-sub">AI and the quiet restructuring of consciousness</span>
+      </a>
+    </div>
+    <a class="post-all r" href="https://whatswhatwhoswho.substack.com" target="_blank" rel="noopener">Everything I've written &rarr;</a>
+
+    <div class="dana-box r" style="margin-top:44px;">
+      <div class="signup-grid">
+        <div>
+          <h3>Straight to your inbox</h3>
+          <p>New essays when they're ready. No schedule, and nothing else.</p>
+        </div>
+        <div class="signup-form">
           <iframe src="https://whatswhatwhoswho.substack.com/embed" width="480" height="150" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
         </div>
       </div>
