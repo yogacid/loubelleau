@@ -115,18 +115,15 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 var(--pad);
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: var(--bg-alt);
       border-bottom: 1px solid var(--rule);
       transition: background 0.35s ease, border-color 0.35s ease;
     }
-    /* transparent over the dark hero, solid once scrolled past it */
+    /* Opaque in both states, so the bar is never caught half-legible over
+       scrolling content. Dark while the hero is behind it, cream after. */
     nav.at-top {
-      background: transparent;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      border-bottom-color: transparent;
+      background: #12201a;
+      border-bottom-color: rgba(244,241,234,0.10);
     }
     nav.at-top .nav-logo               { color: #f4f1ea; }
     nav.at-top .nav-links a            { color: rgba(244,241,234,0.62); }
@@ -608,14 +605,15 @@
       border-bottom: 1px solid var(--rule);
       padding: 36px 28px;
     }
-    .phase-num {
+    .phase-count {
       font-family: 'EB Garamond', serif;
-      font-size: 2.8rem;
+      font-size: 2.4rem;
       font-weight: 400;
       color: var(--rule);
       line-height: 1;
       margin-bottom: 8px;
     }
+    .phase-count span { font-size: 0.95rem; letter-spacing: 0.02em; }
     .phase-weeks {
       font-size: 0.58rem;
       font-weight: 700;
@@ -634,6 +632,15 @@
       margin-bottom: 14px;
     }
     .phase p { font-size: 0.88rem; color: var(--muted); margin: 0; line-height: 1.68; }
+    .phase-total {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
 
     .includes-block {
       border-top: 1px solid var(--rule);
@@ -978,12 +985,36 @@
       .pillars        { grid-template-columns: 1fr; }
       .about-layout   { grid-template-columns: 1fr; }
       .about-photo    { max-width: 220px; }
-      .tcard-grid     { grid-template-columns: 1fr; }
       .phases         { grid-template-columns: 1fr; }
       .outcomes-grid  { grid-template-columns: 1fr 1fr; }
       .includes-list  { grid-template-columns: 1fr; }
       .problem-grid   { grid-template-columns: 1fr; }
     }
+    /* Testimonials become a snap carousel on small screens: six stacked cards
+       is a very long scroll, and a peeking next card signals it swipes.
+       Negative margins bleed it to the screen edges. */
+    @media (max-width: 820px) {
+      .tcard-grid {
+        display: flex;
+        grid-template-columns: none;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: var(--pad);
+        -webkit-overflow-scrolling: touch;
+        margin-left: calc(var(--pad) * -1);
+        margin-right: calc(var(--pad) * -1);
+        padding: 0 var(--pad) 6px;
+        scrollbar-width: none;
+      }
+      .tcard-grid::-webkit-scrollbar { display: none; }
+      .tcard {
+        flex: 0 0 82%;
+        scroll-snap-align: start;
+        padding: 30px 26px;
+      }
+    }
+
     @media (max-width: 640px) {
       html { font-size: 16px; }
       .nav-links { display: none; }
@@ -1014,9 +1045,8 @@
 <nav>
   <a href="#" class="nav-logo">Louis Belleau</a>
   <ul class="nav-links">
-    <li><a href="#work">The Work</a></li>
-    <li><a href="#for-whom">Who It's For</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#offer">Working Together</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <a href="https://cal.com/loubelleau/coaching" class="nav-cta" target="_blank" rel="noopener">Book a Call</a>
@@ -1220,20 +1250,47 @@
 <!-- ── TESTIMONIALS ── -->
 <section id="testimonials">
   <div class="col">
-    <span class="eyebrow r">What People Say</span>
-    <h2 class="r">In their <em>own words</em></h2>
+    <div class="sec-head">
+      <div class="r"><span class="eyebrow">What People Say</span>
+      <h2>In their <em>own words</em></h2></div>
+      <div class="r"><p style="color:var(--muted);">Most of these describe a single journey, a preparation session, or a retreat rather than the longer one-to-one work.</p></div>
+    </div>
 
-    <div class="tcard-grid rs">
+    <div class="tcard-grid rs" style="margin-top:48px;">
       <div class="tcard">
-        <p class="tcard-quote">Louis naturally breathes and embodies a presence of deep peace. The breathwork sessions we did together were life changing. A combination of crystal clear intuition and skillful guidance made me feel safe and held, allowing for a frozen part of me — stuck and hidden in time — to open and melt with great lightness and ease.</p>
+        <p class="tcard-quote">Louis naturally breathes and embodies a presence of deep peace. The breathwork sessions we did together were life changing. A combination of crystal clear intuition and skillful guidance made me feel safe and held, allowing for a frozen part of me, stuck and hidden in time, to open and melt with great lightness and ease.</p>
         <div class="tcard-name">Yost V.</div>
-        <div class="tcard-role">Breathwork &amp; Integration</div>
+        <div class="tcard-role">Private journey &amp; breathwork</div>
       </div>
 
       <div class="tcard">
         <p class="tcard-quote">When I first met Louis, his openness and confident vulnerability drew me in. After doing breathwork with him, I saw that guiding others was his true calling. Louis's peaceful demeanor was calming and I felt a deep sense of safety. Our conversations have lightened my path, reducing shame and revealing a core value of compassion. His knowledge of Buddhism, yoga, and nature-based traditions has deepened my practice, teaching me gentleness towards myself.</p>
         <div class="tcard-name">Chris W.</div>
-        <div class="tcard-role">Psychedelic Integration &amp; Coaching</div>
+        <div class="tcard-role">Private journey &amp; integration</div>
+      </div>
+
+      <div class="tcard">
+        <p class="tcard-quote">The hour-long consultation with Louis before my journey left me as prepared as possible to take the leap, and as a result I had the most meaningful psychedelic experience of my life. Among the most useful parts was learning a new breathing practice that allowed me to stay grounded throughout. That practice has become a pillar of my daily life.</p>
+        <div class="tcard-name">Hannah</div>
+        <div class="tcard-role">Journey preparation</div>
+      </div>
+
+      <div class="tcard">
+        <p class="tcard-quote">As a busy COO of one of America's fastest growing companies, it's been so long since I've had the opportunity to unplug and take the special time needed to reconnect with myself, find healing and practice mindfulness. An incredible safe space, and a beautiful community of people seeking healing and growth.</p>
+        <div class="tcard-name">Anthony</div>
+        <div class="tcard-role">Woven retreat</div>
+      </div>
+
+      <div class="tcard">
+        <p class="tcard-quote">I came hoping to find certain answers. Instead, I was delivered something better. I did not get what I wanted out of it. I got what my body and soul needed.</p>
+        <div class="tcard-name">Evan</div>
+        <div class="tcard-role">Woven retreat</div>
+      </div>
+
+      <div class="tcard">
+        <p class="tcard-quote">I felt connected, seen, and safe in a way my soul has been yearning for a very, very long time. I am so grateful.</p>
+        <div class="tcard-name">Cooper</div>
+        <div class="tcard-role">Woven retreat</div>
       </div>
     </div>
   </div>
@@ -1255,28 +1312,31 @@
 
     <div class="phases r">
       <div class="phase">
-        <div class="phase-num">1</div>
+        <div class="phase-count">6 <span>sessions</span></div>
         <span class="phase-weeks">Two sessions / month</span>
         <div class="phase-title">Three Months</div>
         <p>Long enough to establish the ground: find what's actually present, and begin carrying that orientation into daily life.</p>
+        <div class="phase-total">Around $900</div>
       </div>
       <div class="phase">
-        <div class="phase-num">2</div>
+        <div class="phase-count">12 <span>sessions</span></div>
         <span class="phase-weeks">Two sessions / month</span>
         <div class="phase-title">Six Months</div>
         <p>Long enough for real, lasting reorganization — time for change to root itself in how you actually live.</p>
+        <div class="phase-total">Around $1,800</div>
       </div>
       <div class="phase">
-        <div class="phase-num">3</div>
+        <div class="phase-count"><span>As needed</span></div>
         <span class="phase-weeks">Monthly or as needed</span>
         <div class="phase-title">Ongoing</div>
         <p>For those further along who want a trusted outside perspective to return to.</p>
+        <div class="phase-total">$150 per session</div>
       </div>
     </div>
 
     <div class="dana-box r">
       <h3>On contribution</h3>
-      <p>Sessions are offered in the spirit of <em>dāna</em> — generosity according to your means and the value received. The suggested floor is $100 per session. There is no ceiling. Before we begin, we speak honestly about what feels right.</p>
+      <p>Sessions are offered in the spirit of <em>dāna</em>. The suggested contribution is $150 per session. Less if that isn't workable. More if it's easy for you. Nothing is fixed before we've spoken.</p>
     </div>
 
     <div class="dana-box r" style="margin-top:20px;">
@@ -1324,7 +1384,7 @@
     <div class="sec-head">
       <div class="r"><span class="eyebrow">Writing</span>
       <h2>What I'm still <em>working out</em></h2></div>
-      <div class="r"><p style="color:var(--muted);">Essays on psychedelics, consciousness, and the inner life. Infrequent, long, and often unresolved. It's where I think out loud before I know what I think.</p></div>
+      <div class="r"><p style="color:var(--muted);">Essays on psychedelics, meditation, consciousness, and ecology. It's where I think out loud before I know what I think. Retreats are announced here before anywhere else.</p></div>
     </div>
 
     <div class="post-list rs" style="margin-top:44px;">
@@ -1347,7 +1407,7 @@
       <div class="signup-grid">
         <div>
           <h3>Straight to your inbox</h3>
-          <p>New essays when they're ready. No schedule, and nothing else.</p>
+          <p>New essays when they're ready. Plus retreat invitations.</p>
         </div>
         <div class="signup-form">
           <iframe src="https://whatswhatwhoswho.substack.com/embed" width="480" height="150" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
@@ -1447,7 +1507,7 @@
         </button>
         <div class="faq-body">
           <div class="faq-inner">
-            <p>Sessions are offered in the spirit of dāna — contribution according to means and value received. The suggested floor is $100 per session. Reach out and we'll speak honestly about what's workable.</p>
+            <p>Sessions are offered in the spirit of <em>dāna</em>. The suggested contribution is $150 per session, less if that isn't workable. Three months comes to around $900, six months around $1,800. Nothing is fixed before we've spoken.</p>
           </div>
         </div>
       </div>
@@ -1505,7 +1565,7 @@
   const navEl  = document.querySelector('nav');
   const heroEl = document.getElementById('hero');
   const syncNav = () => {
-    const past = window.scrollY > heroEl.offsetHeight - 80;
+    const past = window.scrollY > heroEl.offsetHeight - navEl.offsetHeight;
     navEl.classList.toggle('at-top', !past);
   };
   syncNav();
