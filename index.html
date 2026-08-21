@@ -252,6 +252,9 @@
       opacity: 0;
       animation: fadeUp 0.8s ease 0.38s forwards;
     }
+    /* keep each sentence of the triad whole, so lines can only break between
+       them rather than mid-phrase */
+    .hero-sub strong span { white-space: nowrap; }
     .hero-sub strong {
       display: block;
       color: rgba(244,241,234,0.9);
@@ -1036,7 +1039,10 @@
       .section { padding: 68px 0; }
       #hero { padding-top: 108px; padding-bottom: 84px; min-height: auto; }
       #hero h1 { max-width: 100%; }
-      .hero-sub strong { font-size: 1.15rem; }
+      /* keep each sentence of the triad whole, so lines can only break between
+       them rather than mid-phrase */
+    .hero-sub strong span { white-space: nowrap; }
+    .hero-sub strong { font-size: 1.15rem; }
       .hero-creds { margin-top: 44px; padding-top: 26px; }
       .hero-cred {
         border-right: none;
@@ -1073,7 +1079,7 @@
     </span>
     <h1>For people who&rsquo;ve<br><em>seen through it.</em></h1>
     <p class="hero-sub">
-      <strong>Out of your head. Into your body. Back to the living earth.</strong>
+      <strong><span>Out of your head.</span> <span>Into your body.</span> <span>Back to the living earth.</span></strong>
       The insight is the easy part. Living differently is the work of a lifetime. I teach meditation and breathwork, and guide psychedelic journeys, one to one.
     </p>
     <div class="hero-actions">
