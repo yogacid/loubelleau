@@ -231,6 +231,8 @@
       animation: fadeUp 0.7s ease 0.1s forwards;
     }
     .hero-tag svg { color: #7fbf9c; }
+    /* both halves stay whole; the line can only break where the <br> is */
+    #hero h1 span { white-space: nowrap; }
     #hero h1 {
       font-size: clamp(2.45rem, 5.2vw, 4.4rem);
       line-height: 1.06;
@@ -1038,7 +1040,9 @@
       .hero-tag { font-size: 0.56rem; letter-spacing: 0.1em; padding: 7px 13px; }
       .section { padding: 68px 0; }
       #hero { padding-top: 108px; padding-bottom: 84px; min-height: auto; }
-      #hero h1 { max-width: 100%; }
+      /* both halves stay whole; the line can only break where the <br> is */
+    #hero h1 span { white-space: nowrap; }
+    #hero h1 { max-width: 100%; }
       /* keep each sentence of the triad whole, so lines can only break between
        them rather than mid-phrase */
     .hero-sub strong span { white-space: nowrap; }
@@ -1055,6 +1059,11 @@
     }
     @media (max-width: 420px) {
       :root { --pad: 18px; }
+    }
+    /* the h1 halves are nowrap, so they cannot shrink to fit. Step the size
+       down on very narrow screens rather than let the headline clip. */
+    @media (max-width: 359px) {
+      #hero h1 { font-size: 2.05rem; }
     }
   </style>
 </head>
@@ -1077,7 +1086,7 @@
     <span class="hero-tag">
       MA &middot; Psychedelics &amp; Consciousness Studies
     </span>
-    <h1>For people who&rsquo;ve<br><em>seen through it.</em></h1>
+    <h1><span>For people who&rsquo;ve</span><br><em><span>seen through it.</span></em></h1>
     <p class="hero-sub">
       <strong><span>Out of your head.</span> <span>Into your body.</span> <span>Back to the living earth.</span></strong>
       The insight is the easy part. Living differently is the work of a lifetime. I teach meditation and breathwork, and guide psychedelic journeys, one to one.
